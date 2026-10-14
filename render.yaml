@@ -1,0 +1,30 @@
+# 아일로 풀빌라 — Render 무료 배포 (Blueprint)
+# 값이 sync: false 인 칸은 Render 화면에서 직접 붙여 넣는다. 비밀 값은 이 파일에 쓰지 않는다.
+services:
+  - type: web
+    name: ailo-poolvilla
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm install --omit=dev
+    startCommand: node dev-server.mjs
+    healthCheckPath: /api/availability
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ADMIN_PASSWORD          # 관리자 페이지 비밀번호 (8자 이상)
+        sync: false
+      - key: ADMIN_SESSION_SECRET    # 로그인 쿠키 서명 키 — Render 가 무작위로 만들어 준다
+        generateValue: true
+      - key: TOSS_CLIENT_KEY         # 토스 문서용 테스트 클라이언트 키
+        sync: false
+      - key: TOSS_SECRET_KEY         # 토스 문서용 테스트 시크릿 키
+        sync: false
+      - key: KAKAO_REST_KEY          # 카카오 REST API 키
+        sync: false
+      - key: KAKAO_CLIENT_SECRET     # 카카오 클라이언트 시크릿
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL  # Upstash 데이터베이스 REST URL (예약·문의·팝업 저장)
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false

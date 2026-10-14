@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>결제 취소 · 아일로 풀빌라</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body class="pay-page" data-result="cancel">
+  <header class="pay-top"><a class="pay-brand" href="index.html">AILO <span>POOL VILLA</span></a></header>
+  <main class="pay-result is-cancel" id="result">
+    <div class="icon" id="resultIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></div>
+    <h1 id="resultTitle">결제를 취소했습니다</h1>
+    <p id="resultMessage">결제는 진행되지 않았고, 예약도 잡히지 않았습니다. 언제든 다시 결제할 수 있습니다.</p>
+    <div class="pay-actions"><a class="is-primary" id="retryLink" href="booking.html">다시 결제하기</a><a id="againLink" href="booking.html">날짜 다시 고르기</a></div>
+  </main>
+  <script src="payment-result.js"></script>
+</body>
+</html>

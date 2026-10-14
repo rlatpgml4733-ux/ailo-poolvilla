@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>우리 숙소 주변 여행하기</title>
+<style>
+/* Pretendard — 폰트 파일을 같이 넣어 외부 요청 없이 씁니다 (아임웹에서 외부 요청이 막혀도 안전) */
+@font-face{font-family:Pretendard;src:url(fonts/Pretendard-Regular.woff2) format("woff2");
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Pretendard;src:url(fonts/Pretendard-SemiBold.woff2) format("woff2");
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:Pretendard;src:url(fonts/Pretendard-Bold.woff2) format("woff2");
+  font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --orange:#FF6B35;
+  --orange-deep:#E8481F;
+  --stay:#1F3A2E;
+  --ink:#1F2937;
+  --ink-2:#5B6670;
+  --ink-3:#8B949C;
+  --line:#E6E5E0;
+  --paper:#FFFFFF;
+  --bg:#F7F6F2;
+  --sea:#2C6382;   /* 지도 이미지가 뜨기 전 배경 */
+  --land:#EDF0E4;
+  --shadow:0 1px 2px rgba(31,41,55,.04),0 2px 6px rgba(31,41,55,.04),0 12px 32px rgba(31,41,55,.07);
+  --radius:18px;
+  --radius-in:13px;                     /* 바깥 테두리 안쪽 — 곡률이 같이 흐르도록 */
+  --ease:cubic-bezier(.32,.72,0,1);     /* 무게감 있는 감속 */
+  --ease-soft:cubic-bezier(.22,.68,.32,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#ECEFF1; --ink-2:#AEB6BD; --ink-3:#7E878E;
+    --line:#2E3338; --paper:#1B1F23; --bg:#141719;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#ECEFF1; --ink-2:#AEB6BD; --ink-3:#7E878E;
+  --line:#2E3338; --paper:#1B1F23; --bg:#141719;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",
+              "Malgun Gothic",sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  font-variant-numeric:tabular-nums;
+  line-height:1.6;
+}
+
+/* ===== 섹션 틀 ===== */
+.section{max-width:1320px;margin:0 auto;padding:56px 16px 72px}
+.section-head{margin:0 0 20px}
+.eyebrow{
+  font-size:12px;letter-spacing:.14em;color:var(--orange);
+  font-weight:700;margin:0 0 8px
+}
+.section h2{
+  font-size:clamp(24px,3.4vw,34px);font-weight:700;margin:0 0 6px;letter-spacing:-.02em
+}
+.section .lead{margin:0;color:var(--ink-2);font-size:15px}
+
+/* ===== 레이아웃 ===== */
+.layout{
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(330px,3fr);
+  gap:16px;margin-top:24px;align-items:stretch
+}
+
+/* ===== 지도 ===== */
+.map-wrap{
+  position:relative;overflow:hidden;border-radius:var(--radius);
+  background:var(--sea);border:1px solid var(--line);
+  aspect-ratio:1448/1086;   /* 지도 이미지 비율 그대로. 높이 제한을 두면 폭이 줄어 카드와 틈이 생김 */
+  cursor:grab;touch-action:none;box-shadow:var(--shadow)
+}
+.map-wrap.dragging{cursor:grabbing}
+.map-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  transform-origin:center center;will-change:transform
+}
+.map-canvas.animate{transition:transform .62s cubic-bezier(.22,.68,.32,1)}
+.map-canvas svg.basemap{display:block;width:100%;height:100%}
+
+/* 연결 점선 — 사진 지도 위에서도 보이도록 어두운 띠를 깔고 그 위에 주황 점선 */
+.link-layer{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.link-layer line{vector-effect:non-scaling-stroke;stroke-linecap:round}
+.link-layer .link-base{stroke:#0E2118;stroke-width:8;opacity:.4}
+.link-layer .link-dash{stroke:var(--orange);stroke-width:3.4;stroke-dasharray:9 7;opacity:1}
+
+/* 핀 */
+.pin{
+  position:absolute;transform:translate(-50%,-50%);
+  background:none;border:0;padding:0;cursor:pointer;
+  display:flex;align-items:center;gap:0;
+  font:inherit;            /* button 은 폰트를 상속하지 않아 숫자가 Arial 로 나왔습니다 */
+  z-index:1;
+}
+/* 마우스를 올린 핀은 다른 핀 위로 — 말풍선이 옆 핀에 가리지 않게 */
+.pin:hover{z-index:30}
+.pin.is-active{z-index:20}
+.pin .dot{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--orange);border:3px solid #fff;
+  box-shadow:0 2px 6px rgba(31,41,55,.28);
+  display:grid;place-items:center;
+  color:#fff;font-size:11.5px;font-weight:700;line-height:1;
+  transition:transform .32s var(--ease), background .32s var(--ease)
+}
+/* 처음 뜰 때 핀이 순서대로 톡 올라옵니다 (transform·opacity 만 사용) */
+@keyframes pinIn{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+  65%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+.pin.enter{animation:pinIn .62s var(--ease) both}
+/* 숫자는 글꼴 기준선 때문에 그냥 두면 원 가운데보다 0.4px 쯤 아래로 내려갑니다.
+   line-height 로 올려서 잉크 중심을 원 중심에 맞춥니다 (브라우저에서 실측) */
+.pin .dot i{font-style:normal;display:block;line-height:.93}
+/* 호버·선택 시 24 -> 32px. 숙소 핀(34px)보다 2px 작게 */
+.pin:hover .dot{transform:scale(1.333)}
+.pin.is-active .dot{
+  background:var(--orange-deep);transform:scale(1.333);
+  box-shadow:0 0 0 5px rgba(232,72,31,.22),0 3px 10px rgba(31,41,55,.3)
+}
+.pin .label{
+  position:absolute;left:calc(100% + 9px);top:50%;transform:translateY(-50%);
+  white-space:nowrap;background:#fff;color:#1F2937;
+  font-size:12.5px;font-weight:500;padding:5px 10px;border-radius:7px;
+  box-shadow:0 2px 10px rgba(31,41,55,.18);
+  opacity:0;pointer-events:none;transition:opacity .16s ease;
+}
+.pin.flip .label{left:auto;right:calc(100% + 9px)}
+.pin:hover .label,.pin.is-active .label{opacity:1}
+
+/* 숙소 핀 */
+.pin-stay{z-index:5}
+.pin-stay .dot{
+  width:34px;height:34px;background:var(--stay);border-width:3px;
+  box-shadow:0 0 0 7px rgba(31,58,46,.14),0 3px 10px rgba(31,41,55,.3)
+}
+.pin-stay .dot svg{width:16px;height:16px;fill:#fff}
+.pin-stay:hover .dot{transform:none}
+.pin-stay .label{
+  opacity:1;background:var(--stay);color:#fff;font-weight:700;
+  left:calc(100% + 11px)
+}
+
+/* 지도 위 컨트롤 */
+.map-ui{position:absolute;inset:0;pointer-events:none}
+.map-ui>*{pointer-events:auto}
+.reset-btn{
+  position:absolute;left:14px;top:14px;
+  background:rgba(255,255,255,.94);border:1px solid rgba(31,41,55,.1);
+  border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;font-weight:500;
+  color:#1F2937;cursor:pointer;box-shadow:0 2px 8px rgba(31,41,55,.12);
+  display:inline-flex;align-items:center;gap:6px
+}
+.reset-btn:hover{background:#fff}
+.reset-btn[hidden]{display:none}
+.zoomers{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px}
+.zoomers button{
+  width:34px;height:34px;border-radius:9px;border:1px solid rgba(31,41,55,.1);
+  background:rgba(255,255,255,.94);color:#1F2937;font-size:17px;line-height:1;
+  cursor:pointer;box-shadow:0 2px 8px rgba(31,41,55,.12)
+}
+.zoomers button:hover{background:#fff}
+.map-note{
+  position:absolute;left:14px;bottom:12px;font-size:11px;color:#6B7680;
+  background:rgba(255,255,255,.82);padding:3px 9px;border-radius:999px
+}
+
+/* ===== 오른쪽 카드 ===== */
+.card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;min-width:0
+}
+/* 장소를 바꿀 때 내용이 한 번 부드럽게 교체됩니다 */
+@keyframes cardIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.card.swap .photo{animation:cardIn .44s var(--ease) both}
+.card.swap .card-body{animation:cardIn .5s var(--ease) .05s both}
+.card-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;border-bottom:1px solid var(--line)
+}
+.card-count{font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+.card-nav .arrows{display:flex;gap:6px}
+.card-nav button{
+  width:28px;height:28px;border-radius:8px;border:1px solid var(--line);
+  background:transparent;color:var(--ink-2);cursor:pointer;font-size:13px;line-height:1
+}
+.card-nav button:hover{background:var(--bg);color:var(--ink)}
+
+.photo{
+  position:relative;width:100%;aspect-ratio:3/2;background:var(--land);
+  display:grid;place-items:center;overflow:hidden
+}
+/* 사진이 뜨기 전 자리 — 은은하게 흐르는 스켈레톤 */
+.photo::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,
+    rgba(255,255,255,0) 20%, rgba(255,255,255,.55) 45%, rgba(255,255,255,0) 70%);
+  background-size:280% 100%;
+  animation:shimmer 1.5s var(--ease-soft) infinite;
+  opacity:1;transition:opacity .45s var(--ease);pointer-events:none
+}
+.photo.is-ready::before{opacity:0}
+@keyframes shimmer{from{background-position:140% 0}to{background-position:-140% 0}}
+/* object-fit 은 contain 유지 — 공공누리 제3유형 사진은 잘라내면 안 됩니다 */
+.photo img{
+  width:100%;height:100%;object-fit:contain;display:block;
+  opacity:0;transform:scale(1.015);
+  transition:opacity .5s var(--ease),transform .7s var(--ease)
+}
+.photo.is-ready img{opacity:1;transform:none}
+.photo .credit{
+  position:absolute;right:8px;bottom:7px;font-size:10.5px;color:#fff;
+  background:rgba(20,25,30,.55);padding:2px 7px;border-radius:5px;letter-spacing:.01em
+}
+.photo .dots{
+  position:absolute;left:50%;bottom:8px;transform:translateX(-50%);
+  display:flex;gap:6px
+}
+.photo .dots button{
+  width:7px;height:7px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.18)
+}
+.photo .dots button.on{background:#fff;width:18px;border-radius:999px}
+
+.card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.place-no{
+  display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  background:var(--orange);color:#fff;font-size:11px;font-weight:700;flex:none
+}
+.place-name{
+  display:flex;align-items:center;gap:8px;
+  font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0;line-height:1.35
+}
+.drive{
+  display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  padding:11px 13px;border-radius:10px;background:rgba(255,107,53,.08)
+}
+.drive strong{font-size:17px;font-weight:700;color:var(--orange-deep);letter-spacing:-.01em}
+.drive .km{font-size:14px;color:var(--ink-2);font-weight:500}
+.drive .caveat{flex-basis:100%;font-size:11.5px;color:var(--ink-3);margin-top:1px}
+.summary{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.68}
+.facts{margin:0;padding:0;list-style:none;border-top:1px solid var(--line);padding-top:12px;display:grid;gap:7px}
+.facts li{display:flex;gap:12px;font-size:13.5px}
+.facts .k{color:var(--ink-3);width:38px;flex:none}
+.cta{
+  margin-top:auto;position:relative;display:flex;align-items:center;justify-content:center;
+  text-decoration:none;background:var(--stay);color:#fff;font-weight:600;font-size:14.5px;
+  padding:11px 11px 11px 18px;border-radius:999px;
+  box-shadow:0 1px 2px rgba(31,58,46,.2),0 8px 20px rgba(31,58,46,.18);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)
+}
+.cta span{margin-right:auto}
+.cta:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(31,58,46,.2),0 14px 28px rgba(31,58,46,.24)}
+.cta:active{transform:scale(.985)}
+/* 화살표는 그냥 놓지 않고 자기 원 안에 넣습니다 */
+.cta i{
+  font-style:normal;display:grid;place-items:center;flex:none;
+  width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.14);
+  font-size:13px;line-height:1;
+  transition:transform .45s var(--ease),background .45s var(--ease)
+}
+.cta:hover i{transform:translate(2px,-2px) scale(1.06);background:rgba(255,255,255,.22)}
+
+/* ===== 모바일 카드 리스트 ===== */
+.sheet{display:none}
+
+.foot-note{
+  margin:18px 2px 0;font-size:12px;color:var(--ink-3);line-height:1.7
+}
+
+/* ===== 모바일 ===== */
+@media (max-width:860px){
+  .section{padding:40px 0 52px}
+  .section-head{padding:0 16px}
+  .layout{display:block;margin-top:18px}
+  .map-wrap{
+    border-radius:0;border-left:0;border-right:0;box-shadow:none;max-height:56vh
+  }
+  .basemap .myeon{display:none}
+  .pin .dot{width:21px;height:21px;border-width:2.5px;font-size:11px}
+  .pin:hover .dot,.pin.is-active .dot{transform:scale(1.238)}  /* 21 -> 26 (숙소 핀 28보다 2 작게) */
+  .pin-stay .dot{width:28px;height:28px}
+  .pin-stay .dot svg{width:13px;height:13px}
+  .pin .label{font-size:11.5px;padding:4px 8px}
+  .pin:not(.pin-stay) .label{display:none}
+  .card{display:none}
+  .sheet{
+    display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:14px 16px 6px;margin-top:-12px;position:relative;z-index:3;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch
+  }
+  .sheet::-webkit-scrollbar{display:none}
+  .sheet .card{
+    display:flex;flex:0 0 min(84vw,340px);scroll-snap-align:center
+  }
+  .sheet .card-nav{display:none}
+  .foot-note{padding:0 16px}
+  .map-note{display:none}
+}
+@media (max-width:420px){
+  .place-name{font-size:18px}
+}
+
+/* 움직임을 줄여 달라고 설정한 사용자에게는 애니메이션을 끕니다 */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important
+  }
+  .photo::before{display:none}
+  .photo img{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<section class="section">
+  <div class="section-head">
+    <p class="eyebrow">AROUND THE STAY</p>
+    <h2>우리 숙소 주변 여행하기</h2>
+    <p class="lead">고성의 대표 여행지 9곳. 핀을 누르면 숙소에서 얼마나 걸리는지 보여드려요.</p>
+  </div>
+
+  <div class="layout">
+    <!-- 지도 -->
+    <div class="map-wrap" id="mapWrap">
+      <div class="map-canvas" id="mapCanvas">
+        <!-- 지도 그림은 basemap.js 에 들어 있고 아래 스크립트가 여기에 넣습니다 -->
+
+        <!-- 지도 그림과 같은 viewBox·맞춤방식이어야 점선이 핀에 붙습니다 -->
+        <svg class="link-layer" viewBox="0 0 1448 1086" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <line class="link-base" id="linkLineBase" x1="0" y1="0" x2="0" y2="0"/>
+          <line class="link-dash" id="linkLine" x1="0" y1="0" x2="0" y2="0"/>
+        </svg>
+
+        <div id="pinLayer"></div>
+      </div>
+
+      <div class="map-ui">
+        <button class="reset-btn" id="resetBtn" type="button">전체 보기</button>
+        <div class="zoomers">
+          <button type="button" id="zoomIn" aria-label="확대">＋</button>
+          <button type="button" id="zoomOut" aria-label="축소">－</button>
+        </div>
+        <div class="map-note">실제 지형을 바탕으로 그린 안내용 지도입니다</div>
+      </div>
+    </div>
+
+    <!-- PC 카드 -->
+    <article class="card" id="card">
+      <div class="card-nav">
+        <span class="card-count" id="cardCount"></span>
+        <div class="arrows">
+          <button type="button" id="prevBtn" aria-label="이전 장소">‹</button>
+          <button type="button" id="nextBtn" aria-label="다음 장소">›</button>
+        </div>
+      </div>
+      <div class="photo" id="cardPhoto"></div>
+      <div class="card-body">
+        <h3 class="place-name"><span class="place-no" id="cardNo">1</span><span id="cardName"></span></h3>
+        <div class="drive">
+          <strong id="cardDrive"></strong><span class="km" id="cardKm"></span>
+          <span class="caveat">교통상황에 따라 달라질 수 있어요</span>
+        </div>
+        <p class="summary" id="cardSummary"></p>
+        <ul class="facts" id="cardFacts" hidden></ul>
+        <a class="cta" id="cardCta" href="#" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </article>
+  </div>
+
+  <!-- 모바일 카드 -->
+  <div class="sheet" id="sheet"></div>
+
+  <p class="foot-note" id="footNote"></p>
+</section>
+
+<script src="basemap.js"></script>
+<script src="places.js"></script>
+<script>
+(function(){
+  "use strict";
+  var stay = window.STAY, places = window.PLACES;
+  var wrap = document.getElementById('mapWrap');
+  var canvas = document.getElementById('mapCanvas');
+  var pinLayer = document.getElementById('pinLayer');
+  /* 지도 그림(basemap.js)을 캔버스 맨 앞에 넣는다 */
+  canvas.insertAdjacentHTML('afterbegin', window.BASEMAP_SVG);
+  var linkLine = document.getElementById('linkLine');
+  var linkLineBase = document.getElementById('linkLineBase');
+  var sheet = document.getElementById('sheet');
+  var activeIndex = Math.max(0, places.findIndex(function(p){return p.id===window.DEFAULT_PLACE;}));
+  var photoIndex = 0;
+  var booting = true;   /* 첫 렌더 동안 카드 스크롤이 선택을 덮어쓰지 못하게 */
+
+  /* ---------- 핀 그리기 ---------- */
+  function houseIcon(){
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 10.6V21h7v-5.6h5V21h7V10.6L12 3z"/></svg>';
+  }
+  var pinEls = [];
+  places.forEach(function(p,i){
+    var b = document.createElement('button');
+    b.type='button';
+    b.className='pin'+(p.x>72?' flip':'');
+    b.setAttribute('aria-label', p.name);
+    b.innerHTML = '<span class="dot"><i>'+(i+1)+'</i></span><span class="label">'+p.name+'</span>';
+    b.addEventListener('click', function(e){ e.stopPropagation(); select(i, true); });
+    pinLayer.appendChild(b); pinEls.push(b);
+  });
+  var stayEl = document.createElement('div');
+  stayEl.className='pin pin-stay'+(stay.x>72?' flip':'');
+  stayEl.innerHTML = '<span class="dot">'+houseIcon()+'</span><span class="label">'+stay.name+'</span>';
+  pinLayer.appendChild(stayEl);
+
+  /* ---------- 핀 위치 ----------
+     지도 SVG 는 viewBox 1200x900 을 'slice'(꽉 채우고 넘치면 자르기)로 그립니다.
+     지도 영역이 정확히 4:3 이 아닐 때도 핀이 그림과 어긋나지 않도록
+     퍼센트를 화면 픽셀로 직접 환산합니다. */
+  var VB_W = 1448, VB_H = 1086;  /* basemap.js 의 viewBox 와 같아야 합니다 */
+  function mapPoint(xPct, yPct){
+    var cw = canvas.clientWidth || wrap.clientWidth;
+    var ch = canvas.clientHeight || wrap.clientHeight;
+    var s = Math.max(cw / VB_W, ch / VB_H);
+    return {
+      x: (cw - VB_W * s) / 2 + xPct / 100 * VB_W * s,
+      y: (ch - VB_H * s) / 2 + yPct / 100 * VB_H * s
+    };
+  }
+  function layoutPins(){
+    places.forEach(function(p, i){
+      var q = mapPoint(p.x, p.y);
+      pinEls[i].style.left = q.x + 'px'; pinEls[i].style.top = q.y + 'px';
+    });
+    var q = mapPoint(stay.x, stay.y);
+    stayEl.style.left = q.x + 'px'; stayEl.style.top = q.y + 'px';
+  }
+
+  /* ---------- 카드 ---------- */
+  function photoHTML(p, idx){
+    var ph = p.photos[idx] || p.photos[0];
+    var dots = '';
+    if(p.photos.length>1){
+      dots = '<div class="dots">'+p.photos.map(function(_,j){
+        return '<button type="button" data-ph="'+j+'" class="'+(j===idx?'on':'')+'" aria-label="사진 '+(j+1)+'"></button>';
+      }).join('')+'</div>';
+    }
+    return '<img src="'+ph.src+'" alt="'+p.name+'" loading="lazy">'+
+           '<span class="credit">'+ph.credit+'</span>'+dots;
+  }
+  /* 사진이 실제로 떴을 때만 스켈레톤을 걷어냅니다 */
+  function watchPhoto(box){
+    var img = box.querySelector('img');
+    box.classList.remove('is-ready');
+    if(!img){ box.classList.add('is-ready'); return; }
+    if(img.complete && img.naturalWidth){ box.classList.add('is-ready'); return; }
+    var done = function(){ box.classList.add('is-ready'); };
+    img.addEventListener('load', done, { once:true });
+    img.addEventListener('error', done, { once:true });
+  }
+  function ctaHTML(p){
+    return '<span>'+p.linkLabel+'</span><i aria-hidden="true">↗</i>';
+  }
+  function factsHTML(p){
+    var rows = [['운영',p.hours],['주차',p.parking],['요금',p.fee]].filter(function(r){return r[1];});
+    return rows.map(function(r){return '<li><span class="k">'+r[0]+'</span><span>'+r[1]+'</span></li>';}).join('');
+  }
+  var cardEl = document.getElementById('card');
+  function renderCard(animate){
+    var p = places[activeIndex];
+    var box = document.getElementById('cardPhoto');
+    document.getElementById('cardCount').textContent = (activeIndex+1)+' / '+places.length;
+    box.innerHTML = photoHTML(p, photoIndex);
+    watchPhoto(box);
+    document.getElementById('cardNo').textContent = activeIndex+1;
+    document.getElementById('cardName').textContent = p.name;
+    document.getElementById('cardDrive').textContent = '차로 약 '+p.driveMin+'분';
+    document.getElementById('cardKm').textContent = '· '+p.driveKm;
+    document.getElementById('cardSummary').textContent = p.summary;
+    var f = document.getElementById('cardFacts');
+    var fh = factsHTML(p);
+    f.innerHTML = fh; f.hidden = !fh;
+    var cta = document.getElementById('cardCta');
+    cta.href = p.linkUrl; cta.innerHTML = ctaHTML(p);
+    if(animate){               /* 애니메이션을 다시 트리거하려면 한 번 떼었다 붙여야 합니다 */
+      cardEl.classList.remove('swap');
+      void cardEl.offsetWidth;
+      cardEl.classList.add('swap');
+    }
+  }
+  document.getElementById('cardPhoto').addEventListener('click', function(e){
+    var b = e.target.closest('[data-ph]'); if(!b) return;
+    photoIndex = +b.dataset.ph; renderCard(false);
+  });
+
+  /* 모바일 카드 리스트 */
+  places.forEach(function(p,i){
+    var el = document.createElement('article');
+    el.className='card'; el.dataset.idx=i;
+    el.innerHTML =
+      '<div class="photo">'+photoHTML(p,0)+'</div>'+
+      '<div class="card-body">'+
+        '<h3 class="place-name"><span class="place-no">'+(i+1)+'</span><span>'+p.name+'</span></h3>'+
+        '<div class="drive"><strong>차로 약 '+p.driveMin+'분</strong><span class="km">· '+p.driveKm+'</span>'+
+        '<span class="caveat">교통상황에 따라 달라질 수 있어요</span></div>'+
+        '<p class="summary">'+p.summary+'</p>'+
+        (factsHTML(p)?'<ul class="facts">'+factsHTML(p)+'</ul>':'')+
+        '<a class="cta" href="'+p.linkUrl+'" target="_blank" rel="noopener noreferrer">'+ctaHTML(p)+'</a>'+
+      '</div>';
+    el.querySelector('.photo').addEventListener('click', function(e){
+      var b = e.target.closest('[data-ph]'); if(!b) return;
+      this.innerHTML = photoHTML(p, +b.dataset.ph);
+      watchPhoto(this);
+    });
+    sheet.appendChild(el);
+    watchPhoto(el.querySelector('.photo'));
+  });
+
+  /* ---------- 지도 변환 ---------- */
+  var scale=1, tx=0, ty=0, minScale=1, maxScale=3;
+  function canvasSize(){
+    return { w: canvas.clientWidth || wrap.clientWidth, h: canvas.clientHeight || wrap.clientHeight };
+  }
+  function computeMin(){ minScale = 1; maxScale = 3.2; }
+  function clamp(){
+    var c = canvasSize();
+    var sw = c.w*scale, sh = c.h*scale;
+    var mx = Math.max(0,(sw - wrap.clientWidth)/2);
+    var my = Math.max(0,(sh - wrap.clientHeight)/2);
+    tx = Math.min(mx, Math.max(-mx, tx));
+    ty = Math.min(my, Math.max(-my, ty));
+  }
+  var resetBtnEl = document.getElementById('resetBtn');
+  function apply(animate){
+    clamp();
+    canvas.classList.toggle('animate', !!animate);
+    canvas.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+scale+')';
+    resetBtnEl.hidden = (scale <= minScale*1.02 && Math.abs(tx)<1 && Math.abs(ty)<1);
+  }
+  /* 전체가 다 보이는 상태(기본)에서는 지도를 움직이지 않고,
+     확대된 상태에서만 선택한 핀이 가운데로 오도록 이동합니다. */
+  function focusPin(p, animate){
+    if(scale <= minScale*1.02) return;
+    var c = canvasSize(), q = mapPoint(p.x, p.y);
+    tx = -(q.x - c.w/2)*scale; ty = -(q.y - c.h/2)*scale;
+    apply(animate);
+  }
+  function resetView(){
+    scale = minScale; tx=0; ty=0; apply(true);
+  }
+
+  /* ---------- 모바일 카드 슬라이더 위치 맞추기 ----------
+     우리가 옮긴 스크롤을 아래 scroll 리스너가 "사용자가 넘겼다"고 오해하면
+     첫 화면 선택이 1번으로 덮어써집니다. 그래서 옮기는 동안 표시를 남깁니다. */
+  var isMobile = function(){ return window.matchMedia('(max-width:860px)').matches; };
+  var sheetSync = false, sheetSyncTimer = null;
+  function scrollSheetTo(i, behavior){
+    if(!isMobile()) return;
+    var mcard = sheet.querySelector('[data-idx="'+i+'"]');
+    if(!mcard) return;
+    var left = mcard.offsetLeft - (sheet.clientWidth - mcard.clientWidth)/2;
+    /* 사용자가 이미 그 카드로 넘겨놓은 상태면 건드리지 않는다.
+       (여기서 굳이 스크롤하면 다음 스와이프가 한 번 씹힘) */
+    if(Math.abs(sheet.scrollLeft - left) < 4) return;
+    sheetSync = true;
+    clearTimeout(sheetSyncTimer);
+    sheetSyncTimer = setTimeout(function(){ sheetSync = false; }, 500);
+    sheet.scrollTo({ left: left, behavior: behavior || 'smooth' });
+  }
+
+  /* ---------- 선택 ---------- */
+  function select(i, move){
+    activeIndex=i; photoIndex=0;
+    pinEls.forEach(function(el,j){ el.classList.toggle('is-active', j===i); });
+    var p = places[i];
+    /* 점선은 지도와 같은 viewBox 단위로 그립니다 (어두운 띠 + 주황 점선 두 겹) */
+    [linkLineBase, linkLine].forEach(function(ln){
+      ln.setAttribute('x1', stay.x/100*VB_W); ln.setAttribute('y1', stay.y/100*VB_H);
+      ln.setAttribute('x2', p.x/100*VB_W);    ln.setAttribute('y2', p.y/100*VB_H);
+    });
+    renderCard(!booting);
+    if(move) focusPin(p, true);
+    scrollSheetTo(i);
+  }
+
+  /* ---------- 드래그 ---------- */
+  var dragging=false, moved=false, sx=0, sy=0, stx=0, sty=0;
+  function onMove(e){
+    if(!dragging) return;
+    var dx=e.clientX-sx, dy=e.clientY-sy;
+    if(!moved && Math.abs(dx)+Math.abs(dy)>5){ moved=true; wrap.classList.add('dragging'); }
+    if(!moved) return;
+    e.preventDefault();
+    tx=stx+dx; ty=sty+dy; apply(false);
+  }
+  function onUp(){
+    if(!dragging) return;
+    dragging=false; wrap.classList.remove('dragging');
+    window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('pointerup', onUp);
+    window.removeEventListener('pointercancel', onUp);
+    setTimeout(function(){ moved=false; }, 0);
+  }
+  wrap.addEventListener('pointerdown', function(e){
+    if(e.target.closest('.map-ui')) return;
+    if(e.button!==0 && e.pointerType==='mouse') return;
+    dragging=true; moved=false; sx=e.clientX; sy=e.clientY; stx=tx; sty=ty;
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+  });
+  /* 드래그 직후의 클릭은 무시 (핀이 잘못 선택되는 것 방지) */
+  wrap.addEventListener('click', function(e){
+    if(moved){ e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  /* ---------- 휠 확대 ---------- */
+  wrap.addEventListener('wheel', function(e){
+    e.preventDefault();
+    var r = wrap.getBoundingClientRect();
+    var cx = e.clientX - r.left - r.width/2;
+    var cy = e.clientY - r.top - r.height/2;
+    var prev = scale;
+    var next = Math.min(maxScale, Math.max(minScale, scale * (e.deltaY<0?1.14:1/1.14)));
+    if(next===prev) return;
+    tx = cx - (cx - tx) * (next/prev);
+    ty = cy - (cy - ty) * (next/prev);
+    scale = next; apply(false);
+  }, { passive:false });
+
+  function zoomBy(f){
+    var prev=scale;
+    scale = Math.min(maxScale, Math.max(minScale, scale*f));
+    tx *= scale/prev; ty *= scale/prev;
+    apply(true);
+  }
+  document.getElementById('zoomIn').addEventListener('click', function(){ zoomBy(1.3); });
+  document.getElementById('zoomOut').addEventListener('click', function(){ zoomBy(1/1.3); });
+  document.getElementById('resetBtn').addEventListener('click', resetView);
+  document.getElementById('prevBtn').addEventListener('click', function(){
+    select((activeIndex-1+places.length)%places.length, true);
+  });
+  document.getElementById('nextBtn').addEventListener('click', function(){
+    select((activeIndex+1)%places.length, true);
+  });
+
+  /* ---------- 모바일: 카드 넘기면 지도도 따라감 ---------- */
+  var sheetTimer=null;
+  sheet.addEventListener('scroll', function(){
+    clearTimeout(sheetTimer);
+    sheetTimer = setTimeout(function(){
+      /* 첫 렌더 중이거나, 우리가 옮긴 스크롤이면 선택을 바꾸지 않는다 */
+      if(booting) return;
+      if(sheetSync){ sheetSync = false; clearTimeout(sheetSyncTimer); return; }
+      var center = sheet.scrollLeft + sheet.clientWidth/2, best=0, bd=Infinity;
+      Array.prototype.forEach.call(sheet.children, function(el,i){
+        var d = Math.abs(el.offsetLeft + el.clientWidth/2 - center);
+        if(d<bd){ bd=d; best=i; }
+      });
+      if(best!==activeIndex) select(best, true);
+    }, 110);
+  });
+
+  /* ---------- 출처 표기 ---------- */
+  (function(){
+    var seen = {};
+    places.forEach(function(p){ p.photos.forEach(function(ph){ seen[ph.credit]=1; }); });
+    document.getElementById('footNote').textContent =
+      '사진 출처 : ' + Object.keys(seen).join(', ') + ' (공공누리 제1·3유형) · ' +
+      '운영시간과 요금은 변경될 수 있으니 방문 전 공식 안내 또는 네이버 지도에서 확인해 주세요.';
+  })();
+
+  /* ---------- 시작 ---------- */
+  /* 첫 렌더가 끝날 때까지는 스크롤 리스너가 선택을 덮어쓰지 못하게 막는다.
+     (레이아웃이 잡히기 전 sheet.scrollTo 가 먹지 않아 1번으로 튀던 문제) */
+  function settleSheet(){
+    scrollSheetTo(activeIndex, 'auto');
+  }
+  /* 핀이 숙소에서 가까운 순으로 하나씩 올라오게 */
+  function animatePins(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var all = pinEls.concat([stayEl]);
+    all.forEach(function(el, i){
+      el.style.animationDelay = (i === all.length - 1 ? 0 : 0.12 + i * 0.045) + 's';
+      el.classList.add('enter');
+    });
+    setTimeout(function(){
+      all.forEach(function(el){ el.classList.remove('enter'); el.style.animationDelay = ''; });
+    }, 1400);
+  }
+  function boot(){
+    computeMin(); scale=minScale; tx=0; ty=0;
+    layoutPins(); apply(false); select(activeIndex, false);
+    animatePins();
+    settleSheet();
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        settleSheet();
+        setTimeout(function(){ booting = false; }, 120);
+      });
+    });
+  }
+  /* 사진이 늦게 뜨면서 카드 폭이 바뀔 수 있어 한 번 더 맞춘다 */
+  window.addEventListener('load', function(){
+    booting = true;
+    settleSheet();
+    setTimeout(function(){ booting = false; }, 150);
+  });
+  /* 사진이 늦게 뜨거나 스크롤바가 생겨서 지도 칸 크기가 바뀌면 핀이 그림에서 밀립니다.
+     창 크기 변화만으로는 놓치는 경우가 있어 지도 칸 자체를 관찰합니다. */
+  if(window.ResizeObserver){
+    new ResizeObserver(function(){ layoutPins(); apply(false); }).observe(canvas);
+  }
+  var lastMobile = isMobile();
+  window.addEventListener('resize', function(){
+    computeMin(); layoutPins(); apply(false);
+    if(isMobile() !== lastMobile){       // PC <-> 모바일 전환 시 슬라이더 재정렬
+      lastMobile = isMobile();
+      booting = true; settleSheet();
+      setTimeout(function(){ booting = false; }, 200);
+    }
+  });
+  boot();
+
+  /* iframe 으로 넣었을 때 바깥 페이지에 실제 높이를 알려줍니다 (iframe 밖에서는 아무 일도 안 함) */
+  if(window.parent !== window){
+    var lastH = 0;
+    var postHeight = function(){
+      var h = Math.ceil(document.documentElement.scrollHeight);
+      if(h !== lastH){ lastH = h; window.parent.postMessage({ gsAroundHeight: h }, '*'); }
+    };
+    /* ResizeObserver 는 화면이 그려질 때만 돌아서, 빌더 편집기처럼 숨겨진 iframe 에서는
+       안 올 수 있습니다. 그래서 바로 한 번 + 로드·리사이즈 때도 보냅니다 */
+    postHeight();
+    window.addEventListener('load', postHeight);
+    window.addEventListener('resize', postHeight);
+    setTimeout(postHeight, 800); setTimeout(postHeight, 2500);
+    if(window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>결제하기 · 아일로 풀빌라</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="glass-buttons.css">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body class="pay-page">
+  <header class="pay-top"><a class="pay-brand" href="index.html">AILO <span>POOL VILLA</span></a></header>
+
+  <main class="pay-wrap">
+    <a class="bk-back back-to-top" id="backLink" href="booking.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>예약 내용 다시 고르기</span></a>
+    <p class="pay-kicker" lang="en">PAYMENT</p>
+    <h1 class="pay-title">결제하기</h1>
+
+    <div class="pay-grid">
+      <div class="pay-card" role="region" aria-labelledby="summaryTitle">
+        <h2 id="summaryTitle">예약 내용</h2>
+        <dl class="pay-summary" id="summary"><div><dt>불러오는 중</dt><dd>…</dd></div></dl>
+        <p class="pay-total"><span>결제 금액</span><strong id="amount">-</strong></p>
+        <p class="pay-note">결제 금액은 서버에서 계산합니다. 바비큐(50,000원)는 별도이며 현장에서 신청합니다.</p>
+      </div>
+
+      <div class="pay-card" role="region" aria-labelledby="buyerTitle">
+        <h2 id="buyerTitle">예약자 정보</h2>
+        <p class="pay-member" id="memberNote" hidden></p>
+        <label class="pay-field"><span>이름</span><input id="buyerName" autocomplete="name" maxlength="20" required></label>
+        <label class="pay-field"><span>휴대폰 번호</span><input id="buyerPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="010-1234-5678" maxlength="13" required></label>
+
+        <h2>결제 수단</h2>
+        <div class="pay-widget" id="payment-method"></div>
+        <div class="pay-widget" id="agreement"></div>
+
+        <div class="inq-consent pay-consent" role="group" aria-labelledby="consentTitle">
+          <h3 id="consentTitle">예약 동의 <em>필수</em></h3>
+          <label class="inq-check"><input type="checkbox" id="consentAll"> <span><b>아래 내용에 모두 동의합니다</b></span></label>
+          <hr>
+          <label class="inq-check"><input type="checkbox" id="consentPrivacy" class="consent-item"> <span>개인정보 수집·이용 동의 (필수)</span></label>
+          <details class="pay-terms"><summary>내용 보기</summary>
+            <p><a href="privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a> · 수집 항목: 이름, 휴대폰 번호, 예약 날짜·인원 · 목적: 예약 확인과 입실 안내, 취소·환불 처리 · 보관 기간: 퇴실 후 1년(관련 법에 따라 더 오래 보관해야 하는 결제 기록은 그 기간까지). 동의하지 않으면 예약할 수 없습니다. 카드번호는 아일로가 저장하지 않습니다.</p>
+          </details>
+          <label class="inq-check"><input type="checkbox" id="consentRefund" class="consent-item"> <span>취소·환불 규정 확인 및 동의 (필수)</span></label>
+          <details class="pay-terms"><summary>규정 보기</summary>
+            <ul>
+              <li>입실 10일 전까지 <b>100%</b></li><li>7~9일 전 <b>90%</b></li><li>5~6일 전 <b>70%</b></li>
+              <li>3~4일 전 <b>50%</b></li><li>1~2일 전 <b>20%</b></li><li>입실 당일·미입실 <b>환불 없음</b></li>
+            </ul>
+            <p>총 숙박비(전액 결제) 기준입니다. 날짜 변경은 기존 예약을 취소한 뒤 다시 예약하는 방식으로 처리됩니다.</p>
+          </details>
+        </div>
+
+        <button class="pay-submit" type="button" id="payButton" disabled>결제하기</button>
+        <p class="pay-error" id="payError" role="alert"></p>
+        <p class="pay-hold">결제하기를 누르면 고른 날짜를 <b>10분 동안</b> 잡아 둡니다. 10분 안에 결제를 마쳐 주세요.</p>
+        <p class="pay-test">지금은 <b>테스트 결제</b>입니다. 결제창에서 결제를 진행해도 실제로 돈이 빠져나가지 않습니다.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://js.tosspayments.com/v2/standard"></script>
+  <script src="checkout.js"></script>
+</body>
+</html>

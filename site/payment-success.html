@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <title>결제 확인 · 아일로 풀빌라</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body class="pay-page" data-result="success">
+  <header class="pay-top"><a class="pay-brand" href="index.html">AILO <span>POOL VILLA</span></a></header>
+  <main class="pay-result" id="result" aria-live="polite">
+    <div class="icon" id="resultIcon" aria-hidden="true"></div>
+    <h1 id="resultTitle">결제를 확인하고 있습니다</h1>
+    <p id="resultMessage" class="pay-loading">잠시만 기다려 주세요. 창을 닫지 마세요.</p>
+    <dl class="pay-summary" id="summary" hidden></dl>
+    <div class="pay-actions" id="okActions" hidden><a class="is-primary" href="index.html">처음 화면으로</a><a href="my.html">내 예약 보기</a></div>
+    <div class="pay-actions" id="failActions" hidden><a class="is-primary" id="retryLink" href="booking.html">다시 결제하기</a><a href="index.html">처음 화면으로</a></div>
+  </main>
+  <script src="payment-result.js"></script>
+</body>
+</html>

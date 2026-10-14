@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>결제 실패 · 아일로 풀빌라</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body class="pay-page" data-result="fail">
+  <header class="pay-top"><a class="pay-brand" href="index.html">AILO <span>POOL VILLA</span></a></header>
+  <main class="pay-result is-fail" id="result" aria-live="polite">
+    <div class="icon" id="resultIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></div>
+    <h1 id="resultTitle">결제에 실패했습니다</h1>
+    <p id="resultMessage">결제가 정상적으로 처리되지 않았습니다. 다시 시도해 주세요.</p>
+    <p class="pay-note" id="errorCode"></p>
+    <div class="pay-actions"><a class="is-primary" id="retryLink" href="booking.html">다시 결제하기</a><a href="index.html">처음 화면으로</a></div>
+  </main>
+  <script src="payment-result.js"></script>
+</body>
+</html>

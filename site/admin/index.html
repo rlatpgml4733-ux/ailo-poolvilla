@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>관리자 · 아일로 풀빌라</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <!-- 사장님 전용 관리자 페이지. 사이트 메뉴에는 링크를 두지 않는다. 데이터는 로그인 쿠키가 있어야만 API에서 내려온다. -->
+
+  <main class="login" id="loginView" hidden>
+    <form class="login-card" id="loginForm" novalidate>
+      <p class="brand">AILO <span>POOL VILLA</span></p>
+      <h1>관리자 로그인</h1>
+      <label class="field">
+        <span>비밀번호</span>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn-primary" type="submit" id="loginButton">로그인</button>
+      <p class="form-error" id="loginError" role="alert"></p>
+    </form>
+  </main>
+
+  <div class="app" id="appView" hidden>
+    <header class="topbar">
+      <p class="brand">AILO <span>관리자</span></p>
+      <button class="btn-ghost" type="button" id="logoutButton">로그아웃</button>
+    </header>
+
+    <main class="wrap">
+      <section class="summary" aria-label="새로 들어온 건수">
+        <div class="stat"><span>새 예약</span><strong id="newBookings">0</strong></div>
+        <div class="stat"><span>새 문의</span><strong id="newInquiries">0</strong></div>
+      </section>
+
+      <p class="sample-note" id="sampleNote" hidden>지금 보이는 항목은 <b>예시</b> 데이터입니다. 사이트의 예약·문의 접수를 연결하면 실제 내역이 이곳에 쌓입니다.</p>
+
+      <div class="tabs" role="tablist" aria-label="목록 선택">
+        <button class="tab" type="button" role="tab" id="tabBookings" aria-selected="true" aria-controls="panelBookings">예약 <span id="countBookings">0</span></button>
+        <button class="tab" type="button" role="tab" id="tabInquiries" aria-selected="false" aria-controls="panelInquiries">문의 <span id="countInquiries">0</span></button>
+        <button class="tab" type="button" role="tab" id="tabPopups" aria-selected="false" aria-controls="panelPopups">팝업 <span id="countPopups">0</span></button>
+        <label class="filter" id="filterWrap"><span>상태</span><select id="statusFilter"></select></label>
+      </div>
+
+      <section class="panel" id="panelBookings" role="tabpanel" aria-labelledby="tabBookings">
+        <table class="list">
+          <thead><tr><th>접수</th><th>예약자</th><th>연락처</th><th>독채</th><th>일정</th><th>인원</th><th>금액 · 결제</th><th>상태</th></tr></thead>
+          <tbody id="bookingRows"></tbody>
+        </table>
+        <p class="empty" id="bookingEmpty" hidden>해당하는 예약이 없습니다.</p>
+      </section>
+
+      <section class="panel" id="panelInquiries" role="tabpanel" aria-labelledby="tabInquiries" hidden>
+        <table class="list">
+          <thead><tr><th>접수</th><th>이름</th><th>연락처</th><th>문의 내용</th><th>상태</th></tr></thead>
+          <tbody id="inquiryRows"></tbody>
+        </table>
+        <p class="empty" id="inquiryEmpty" hidden>해당하는 문의가 없습니다.</p>
+      </section>
+
+      <section class="panel panel-popups" id="panelPopups" role="tabpanel" aria-labelledby="tabPopups" hidden>
+        <form class="popup-form" id="popupForm" novalidate>
+          <h2>새 팝업 올리기</h2>
+          <label class="drop" for="popupFile">
+            <input type="file" id="popupFile" accept="image/jpeg,image/png,image/webp">
+            <img id="popupPreview" alt="" hidden>
+            <span id="popupFileText">이미지 고르기<small>JPG · PNG · WebP, 3MB 이하</small></span>
+          </label>
+          <label class="field"><span>팝업 설명 (선택 · 화면 읽기 프로그램이 읽어 주는 글)</span><input id="popupAlt" maxlength="80" placeholder="예: 가을 얼리버드 10% 할인"></label>
+          <label class="field"><span>누르면 이동할 주소 (선택)</span><input id="popupLink" maxlength="300" placeholder="예: #reserve (예약하기로 이동)"></label>
+          <label class="check"><input type="checkbox" id="popupActive" checked> 올리자마자 사이트에 띄우기</label>
+          <button class="btn-primary" type="submit" id="popupSubmit">팝업 올리기</button>
+          <p class="form-error" id="popupError" role="alert"></p>
+        </form>
+        <div class="popup-list">
+          <h2>올린 팝업</h2>
+          <p class="hint">게시 중인 팝업은 모두 메인 첫 화면에 나란히 뜹니다(먼저 올린 것이 왼쪽). 방문자는 버튼 하나로 한꺼번에 닫을 수 있습니다.</p>
+          <ul id="popupItems"></ul>
+          <p class="empty" id="popupEmpty" hidden>아직 올린 팝업이 없습니다.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>예약 문의 · 아일로 풀빌라</title>
+  <meta name="description" content="아일로 풀빌라 예약 전 궁금한 점을 남겨 주세요. 매일 09:00–20:00에 확인합니다.">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="glass-buttons.css">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body class="pay-page">
+  <header class="pay-top"><a class="pay-brand" href="index.html">AILO <span>POOL VILLA</span></a></header>
+
+  <main class="pay-wrap inq-wrap">
+    <a class="bk-back back-to-top" id="backLink" href="index.html#check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span>사이트로 돌아가기</span></a>
+    <p class="pay-kicker" lang="en">ASK BEFORE YOU BOOK</p>
+    <h1 class="pay-title">예약 문의</h1>
+    <p class="inq-lead">아이 동반, 늦은 도착, 바비큐 준비물처럼 예약 전에 궁금한 점을 남겨 주세요. 매일 09:00–20:00에 확인하고 남겨 주신 번호로 연락드립니다.</p>
+
+    <form class="pay-card inq-form" id="inquiryForm" novalidate>
+      <div class="inq-row">
+        <label class="pay-field"><span>이름 <em>필수</em></span><input id="name" autocomplete="name" maxlength="20" required></label>
+        <label class="pay-field"><span>연락처 <em>필수</em></span><input id="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="010-1234-5678" maxlength="13" required></label>
+      </div>
+      <div class="inq-row inq-row-3">
+        <label class="pay-field"><span>희망 체크인 (선택)</span><input id="checkIn" type="date"></label>
+        <label class="pay-field"><span>희망 체크아웃 (선택)</span><input id="checkOut" type="date"></label>
+        <label class="pay-field"><span>인원 (선택)</span>
+          <select id="guests" class="inq-select"><option value="">선택 안 함</option></select>
+        </label>
+      </div>
+      <label class="pay-field"><span>문의 내용 <em>필수</em></span><textarea id="message" rows="6" maxlength="1000" placeholder="예: 5살 아이와 가는데 풀 수심이 괜찮을까요? 밤 10시쯤 도착 예정이에요." required></textarea><small class="inq-count" id="count">0 / 1000</small></label>
+
+      <!-- 사람에게는 보이지 않는 칸 (자동 스팸 거르기) -->
+      <div class="inq-hp" aria-hidden="true"><label>웹사이트<input id="website" tabindex="-1" autocomplete="off"></label></div>
+
+      <div class="inq-consent">
+        <label class="inq-check"><input type="checkbox" id="consent"> <span><b>개인정보 수집·이용에 동의합니다</b> (필수)</span></label>
+        <p><a href="privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a> · 수집 항목: 이름, 연락처, 희망 날짜·인원, 문의 내용 · 목적: 예약 문의 답변 · 보관: 답변 후 1년 뒤 파기. 동의하지 않으면 문의를 남길 수 없습니다.</p>
+      </div>
+
+      <button class="pay-submit" type="submit" id="submitButton">문의 남기기</button>
+      <p class="pay-error" id="formError" role="alert"></p>
+    </form>
+
+    <div class="pay-result inq-done" id="done" role="region" aria-label="문의 접수 완료" hidden aria-live="polite">
+      <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+      <h2>문의가 접수되었습니다</h2>
+      <p>문의번호</p>
+      <p class="inq-number" id="number"></p>
+      <p>매일 09:00–20:00에 확인하고 남겨 주신 연락처로 답변드립니다. 문의번호를 알려 주시면 더 빨리 찾아 드릴 수 있어요.</p>
+      <div class="pay-actions"><a class="is-primary" href="booking.html">예약 가능일 보기</a><a href="index.html">처음 화면으로</a></div>
+    </div>
+  </main>
+  <script src="inquiry.js"></script>
+</body>
+</html>

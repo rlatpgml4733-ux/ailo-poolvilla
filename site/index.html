@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>아일로 풀빌라</title>
+  <link rel="stylesheet" href="site.css">
+  <link rel="preload" as="image" type="image/webp" href="../02_assets/hero-sequence-webp/frame-001.webp" media="(min-width:801px)" fetchpriority="high">
+  <link rel="stylesheet" href="travel-map.css">
+  <link rel="stylesheet" href="mobile.css">
+  <link rel="stylesheet" href="booking-search.css">
+  <link rel="stylesheet" href="glass-buttons.css">
+  <link rel="stylesheet" href="site-popup.css">
+</head>
+<body>
+  <header class="wrap header">
+    <a class="brand" href="#top" aria-label="아일로 풀빌라 홈">AILO <span>POOL VILLA</span></a>
+    <nav class="nav" id="mainNav" aria-label="주요 메뉴"><a href="#villas">독채 보기</a><a href="#check">예약 전 확인</a><a href="#space">공간</a><a href="#gs-around">관광지도</a><a href="#location">오시는 길</a><a class="member-link" href="my.html" data-member-link>카카오로 시작하기</a></nav>
+    <!-- 포트폴리오용 텍스트 CTA: 실제 예약 링크를 연결하지 않음 -->
+    <a class="reserve glass-btn" href="booking.html">실시간 예약</a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainNav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </header>
+
+  <main id="top">
+    <!-- 분위기: 예약 CTA는 상단 내비에만 유지 -->
+<section class="hero" aria-label="아일로 풀빌라 가상 숙소 투어"><div class="hero-pin"><div class="hero-media"><picture><source media="(min-width:801px)" srcset="../02_assets/hero-sequence-webp/frame-001.webp" type="image/webp"><img class="hero-poster" src="../02_assets/video/ailo-hero-poster.jpg" alt="" fetchpriority="high" decoding="async"></picture><canvas class="hero-canvas" id="heroCanvas" data-frame-count="140" data-frame-path="../02_assets/hero-sequence-webp/frame-" aria-hidden="true"></canvas><video class="hero-video" id="heroVideo" muted playsinline loop preload="metadata" poster="../02_assets/video/ailo-hero-poster.jpg" aria-label="아일로 풀빌라의 바다와 실내 공간을 둘러보는 영상"><source src="../02_assets/video/720p.mp4" type="video/mp4"></video><button class="hero-video-toggle" id="heroVideoToggle" type="button" hidden>영상 재생</button></div><div class="wrap hero-inner"><div class="hero-text"><p class="eyebrow" lang="en">TWO PRIVATE VILLAS BY THE SEA</p><h1 lang="en">KNOW YOUR STAY.<br>BEFORE YOU ARRIVE.</h1><p class="hero-copy"><span class="hero-copy-desktop">사진으로 상상한 하루가 실제 객실 구성과 다르지 않도록, 아일로는 예약 전에<br class="hero-copy-break">확인할 정보를 먼저 보여드립니다.</span><span class="hero-copy-mobile"><span>사진으로 상상한 하루가 실제 객실 구성과 다르지 않도록,</span><span>아일로는 예약 전에 확인할 정보를 먼저 보여드립니다.</span></span></p></div><span class="scroll-hint">SCROLL TO EXPLORE</span></div></div></section>
+
+    <!-- 안심: 사진과 실제 구성의 차이를 줄이는 비교 -->
+    <section id="villas"><div class="wrap"><p class="section-kicker">TWO PRIVATE VILLAS</p><h2>두 독채를 확인해 보세요</h2><div class="villa-grid"><article class="villa spotlight"><div class="villa-media"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s03.webp" type="image/webp"><img class="villa-image" src="../02_assets/images/pages/s03.webp" width="1672" height="941" alt="독채 A의 높은 천장 거실과 바다로 열린 풀 테라스" loading="lazy" decoding="async"></picture></div><h3>COVE HOUSE · 코브 하우스</h3><dl><div><dt>권장 일행</dt><dd>가족·친구 · 기준 4인 / 최대 6인</dd></div><div><dt>침실·침대</dt><dd>침실 2 · 킹 1 / 퀸 2</dd></div><div><dt>욕실</dt><dd>욕실 2 · 독립 샤워 공간</dd></div><div><dt>풀·계단</dt><dd>전용 온수풀 · 실내 계단 있음</dd></div><div><dt>뷰·테라스</dt><dd>거실 오션뷰 · 프라이빗 다이닝 데크</dd></div></dl></article><article class="villa spotlight"><div class="villa-media"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s04.webp" type="image/webp"><img class="villa-image" src="../02_assets/images/pages/s04.webp" width="1672" height="941" alt="독채 B의 바다 조망 침실과 풀로 이어지는 유리문" loading="lazy" decoding="async"></picture></div><h3>REEF HOUSE · 리프 하우스</h3><dl><div><dt>권장 일행</dt><dd>커플·소가족 · 기준 2인 / 최대 4인</dd></div><div><dt>침실·침대</dt><dd>침실 1 · 킹 1 / 데이베드 1</dd></div><div><dt>욕실</dt><dd>욕실 1 · 바다를 향한 욕조</dd></div><div><dt>풀·계단</dt><dd>전용 온수풀 · 실내 단층</dd></div><div><dt>뷰·테라스</dt><dd>침실 오션뷰 · 선베드 테라스</dd></div></dl></article></div></div></section>
+
+    <section id="check"><div class="wrap"><p class="section-kicker">ONE MINUTE CHECK</p><h2>예약 전 1분 확인</h2><div class="check-grid"><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M216.57,39.43A80,80,0,0,0,83.91,120.78L28.69,176A15.86,15.86,0,0,0,24,187.31V216a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V208H96a8,8,0,0,0,8-8V184h16a8,8,0,0,0,5.66-2.34l9.56-9.57A79.73,79.73,0,0,0,160,176h.1A80,80,0,0,0,216.57,39.43ZM224,98.1c-1.09,34.09-29.75,61.86-63.89,61.9H160a63.7,63.7,0,0,1-23.65-4.51,8,8,0,0,0-8.84,1.68L116.69,168H96a8,8,0,0,0-8,8v16H72a8,8,0,0,0-8,8v16H40V187.31l58.83-58.82a8,8,0,0,0,1.68-8.84A63.72,63.72,0,0,1,96,95.92c0-34.14,27.81-62.8,61.9-63.89A64,64,0,0,1,224,98.1ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg>입퇴실</b><span>체크인 15:00 · 체크아웃 11:00. 당일 안내받은 도어 코드로 편하게 입실하세요.</span></div><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M216,72H32V48a8,8,0,0,0-16,0V208a8,8,0,0,0,16,0V176H240v32a8,8,0,0,0,16,0V112A40,40,0,0,0,216,72ZM32,88h72v72H32Zm88,72V88h96a24,24,0,0,1,24,24v48Z"/></svg>인원·침구</b><span>코브는 최대 6인, 리프는 최대 4인. 추가 침구는 예약할 때 신청해 주세요.</span></div><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 21V7a3 3 0 0 1 6 0M20 21V7a3 3 0 0 1 6 0M10 11h10m-10 5h10"/><path d="M3 23c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0M3 28c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0" stroke="var(--sea)"/></svg>풀 이용</b><span>사계절 전용 온수풀 · 수심 1.2m. 어린이는 보호자와 함께 이용해 주세요.</span></div><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15h20a10 10 0 0 1-20 0ZM4 15h24M11 24l-3 5m13-5 3 5M10 27h12"/><path d="M11 10c-3-3 3-4 0-7m10 7c-3-3 3-4 0-7" stroke="var(--sea)"/><path d="M11 18h10"/></svg>바비큐</b><span>프라이빗 데크에서 즐기는 저녁. 그릴 세트는 사전 신청 시 50,000원이며 식재료는 직접 준비해 주세요.</span></div><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="9" width="24" height="19" rx="3"/><path d="M12 9V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M10 10v17m12-17v17"/><path d="M14 16h4m-4 4h4" stroke="var(--sea)"/></svg>준비물·반입</b><span>타월·가운·욕실용품·기본 조리도구를 준비해 두었습니다. 수영복과 개인 세면용품만 챙겨 오세요.</span></div><div class="check spotlight"><b><svg class="check-icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"/></svg>문의 기준</b><span>예약 문의는 매일 09:00–20:00에 확인합니다. 늦은 도착이나 특별한 요청은 미리 알려 주세요.</span><a class="inq-link" href="inquiry.html">문의 남기기 <span aria-hidden="true">→</span></a></div></div></div></section>
+
+    <!-- 증거: 감성 장면과 실제 공간을 교차 -->
+    <section id="space" class="space-horizontal"><div class="space-pin"><div class="wrap"><div class="space-head"><p class="section-kicker">SPACE TO STAY</p><h2>공간을 둘러보세요.</h2></div><div class="gallery-window"><div class="gallery"><div class="gallery-card has-image clip-reveal" tabindex="0"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s05.webp" type="image/webp"><img src="../02_assets/images/pages/s05.webp" width="1672" height="941" alt="통창 너머 바다와 풀을 바라보는 거실" loading="lazy" decoding="async"></picture><span>거실 · 바다</span></div><div class="gallery-card has-image clip-reveal" tabindex="0"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s06.webp" type="image/webp"><img src="../02_assets/images/pages/s06.webp" width="1672" height="941" alt="침대와 바다 조망을 함께 보여주는 침실" loading="lazy" decoding="async"></picture><span>침실</span></div><div class="gallery-card has-image clip-reveal" tabindex="0"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s07.webp" type="image/webp"><img src="../02_assets/images/pages/s07.webp" width="1672" height="941" alt="해안 풍경과 이어지는 프라이빗 인피니티 풀" loading="lazy" decoding="async"></picture><span>프라이빗 풀</span></div><div class="gallery-card has-image clip-reveal" tabindex="0"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s08.webp" type="image/webp"><img src="../02_assets/images/pages/s08.webp" width="1672" height="941" alt="바다를 바라보는 야외 식탁과 바비큐 그릴이 있는 테라스" loading="lazy" decoding="async"></picture><span>테라스 · 바비큐</span></div><div class="gallery-card has-image clip-reveal" tabindex="0"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s01.webp" type="image/webp"><img src="../02_assets/images/pages/s01.webp" width="1672" height="941" alt="두 독채와 푸른 해안을 함께 내려다보는 숙소 전경" loading="lazy" decoding="async"></picture><span>숙소 전경</span></div></div><div class="gallery-status"><span id="galleryCount">01 / 05</span><div class="gallery-progress" role="progressbar" aria-label="공간 둘러보기 진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="galleryProgress"></i></div></div></div></div></div></section>
+
+<section id="gs-around" class="section" data-theme="light">
+  <div class="section-head">
+    <p class="eyebrow">AROUND THE STAY</p>
+    <h2>관광지도 둘러보세요</h2>
+    <p class="lead">고성의 여행지 9곳을 지도에서 만나보세요. 핀을 누르면 사진과 이동 안내를 확인할 수 있습니다.</p>
+  </div>
+
+  <div class="layout">
+    <!-- 지도 -->
+    <div class="map-wrap" id="gs-around-mapWrap">
+      <div class="map-canvas" id="gs-around-mapCanvas">
+        <!-- 지도 그림은 basemap.js 에 들어 있고 아래 스크립트가 여기에 넣습니다 -->
+
+        <!-- 지도 그림과 같은 viewBox·맞춤방식이어야 점선이 핀에 붙습니다 -->
+        <svg class="link-layer" viewBox="0 0 1448 1086" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <line class="link-base" id="gs-around-linkLineBase" x1="0" y1="0" x2="0" y2="0"/>
+          <line class="link-dash" id="gs-around-linkLine" x1="0" y1="0" x2="0" y2="0"/>
+        </svg>
+
+        <div id="gs-around-pinLayer"></div>
+      </div>
+
+      <div class="map-ui">
+        <button class="reset-btn" id="gs-around-resetBtn" type="button">전체 보기</button>
+        <div class="zoomers">
+          <button type="button" id="gs-around-zoomIn" aria-label="확대">＋</button>
+          <button type="button" id="gs-around-zoomOut" aria-label="축소">－</button>
+        </div>
+        <div class="map-note">실제 지형을 바탕으로 그린 안내용 지도입니다</div>
+      </div>
+    </div>
+
+    <!-- PC 카드 -->
+    <article class="card" id="gs-around-card">
+      <div class="card-nav">
+        <span class="card-count" id="gs-around-cardCount"></span>
+        <div class="arrows">
+          <button type="button" id="gs-around-prevBtn" aria-label="이전 장소">‹</button>
+          <button type="button" id="gs-around-nextBtn" aria-label="다음 장소">›</button>
+        </div>
+      </div>
+      <div class="photo" id="gs-around-cardPhoto"></div>
+      <div class="card-body">
+        <h3 class="place-name"><span class="place-no" id="gs-around-cardNo">1</span><span id="gs-around-cardName"></span></h3>
+        <div class="drive">
+          <strong id="gs-around-cardDrive"></strong><span class="km" id="gs-around-cardKm"></span>
+          <span class="caveat">교통상황에 따라 달라질 수 있어요</span>
+        </div>
+        <p class="summary" id="gs-around-cardSummary"></p>
+        <ul class="facts" id="gs-around-cardFacts" hidden></ul>
+        <a class="cta" id="gs-around-cardCta" href="#" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </article>
+  </div>
+
+  <!-- 모바일 카드 -->
+  <div class="sheet" id="gs-around-sheet"></div>
+
+  <p class="foot-note" id="gs-around-footNote"></p>
+</section>
+
+    <!-- 예방: 예약 전 확인으로 반복 질문까지 통합 -->
+
+    <!-- 안내: 도착 전 동선·주차 정보 -->
+    <section id="location"><div class="wrap route"><div class="arrival-copy"><p class="section-kicker">DIRECTIONS</p><h2>오는 길과 주차</h2><div class="route-guide"><p class="section-kicker">YOUR ARRIVAL</p><div><b>01 · 해안길을 따라</b><p class="arrival-first"><span>해안도로를 따라 드라이브를 즐기며 도착하세요.</span> <span>정확한 진입 위치는 예약 안내와 함께 보내드립니다.</span></p></div><div><b>02 · 독채 앞 전용 주차</b><p>코브·리프 표지판을 따라 각 독채 앞에 주차해 주세요. 늦은 저녁에도 진입등이 길을 안내합니다.</p></div><div><b>03 · 기다림 없는 입실</b><p>안내받은 도어 코드로 바로 들어오세요. 바다를 보는 거실에서 아일로의 하루가 시작됩니다.</p></div></div></div><div class="arrival-map"><iframe src="https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x356ec27e8dee4973%3A0x276b8e9f85d458b0!2z6rK97IOB64Ko64-EIOqzoOyEseq1sA!5e0!3m2!1sko!2skr!4v1791213151560!5m2!1sko!2skr" title="오시는 길 지도 — 경상남도 고성군" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div></section>
+
+    <!-- 전환: 간단한 검색창 → 예약 상세 페이지(booking.html). 실제 예약·결제 없는 포트폴리오 목업 -->
+    <section class="booking" id="reserve"><div class="wrap">
+      <div class="booking-intro"><p class="section-kicker">CHECK AVAILABILITY</p><h2>예약하기</h2><p>독채와 날짜, 인원을 고르면 예약 가능 여부와 요금을 바로 확인할 수 있어요.</p></div>
+      <form class="search-bar" id="searchBar" action="booking.html" method="get" novalidate>
+        <div class="sb-field"><label class="sb-label" for="sbVilla">독채</label><div class="sb-select"><select id="sbVilla" name="villa"><option value="reef" selected>리프 하우스</option><option value="cove">코브 하우스</option><option value="both">두 독채 함께</option></select></div></div>
+        <div class="sb-field sb-dates"><span class="sb-label" id="sbDatesLabel">체크인 → 체크아웃</span><button class="sb-datebtn" id="sbDatesBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="sbPop" aria-labelledby="sbDatesLabel sbDatesText"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg><strong id="sbDatesText" class="is-empty">날짜 선택</strong></button><input type="hidden" name="in" id="sbIn"><input type="hidden" name="out" id="sbOut"></div>
+        <div class="sb-field"><label class="sb-label" for="sbGuests">인원</label><div class="sb-select"><select id="sbGuests" name="guests"><option value="1">1인</option><option value="2" selected>2인</option><option value="3">3인</option><option value="4">4인</option></select></div></div>
+        <button class="sb-submit" type="submit">예약 확인하기</button>
+        <div class="sb-pop" id="sbPop" role="dialog" aria-label="체크인·체크아웃 날짜 선택" hidden>
+          <div class="sb-pop-head"><button class="sb-nav" id="sbPrev" type="button" aria-label="이전 달 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button><p class="sb-pop-note" id="sbPopNote" aria-live="polite">체크인 날짜를 선택하세요.</p><button class="sb-nav" id="sbNext" type="button" aria-label="다음 달 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button></div>
+          <div class="sb-months" id="sbMonths"></div>
+          <div class="sb-legend"><span><i class="sb-dot is-open"></i>예약 가능</span><span><i class="sb-dot is-full"></i>마감</span><span><i class="sb-dot is-out"></i>퇴실만 가능</span><button class="sb-pop-close" id="sbClose" type="button">닫기</button></div>
+        </div>
+      </form>
+      <div class="sb-backdrop" id="sbBackdrop" hidden></div>
+      <p class="sb-hint" id="sbHint" aria-live="polite">날짜는 나중에 예약 확인 페이지의 달력에서도 고를 수 있어요. 마감된 날은 줄이 그어져 있습니다.</p>
+      <div class="villa-pick" role="group" aria-label="사진으로 독채 고르기">
+        <button class="vp-card" type="button" data-villa="reef" aria-pressed="true"><span class="vp-media"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s04.webp" type="image/webp"><img src="../02_assets/images/pages/s04.webp" width="1672" height="941" alt="리프 하우스의 바다 조망 침실과 풀로 이어지는 유리문" loading="lazy" decoding="async"></picture></span><span class="vp-body"><span class="vp-en" lang="en">REEF HOUSE</span><strong>리프 하우스</strong><span class="vp-meta">기준 2인 · 최대 4인 · 침실 1</span><span class="vp-price">1박 260,000원<small>부터</small></span></span></button>
+        <button class="vp-card" type="button" data-villa="cove" aria-pressed="false"><span class="vp-media"><picture><source media="(max-width:720px)" srcset="../02_assets/images/mobile/s03.webp" type="image/webp"><img src="../02_assets/images/pages/s03.webp" width="1672" height="941" alt="코브 하우스의 높은 천장 거실과 바다로 열린 풀 테라스" loading="lazy" decoding="async"></picture></span><span class="vp-body"><span class="vp-en" lang="en">COVE HOUSE</span><strong>코브 하우스</strong><span class="vp-meta">기준 4인 · 최대 6인 · 침실 2</span><span class="vp-price">1박 340,000원<small>부터</small></span></span></button>
+      </div>
+      <p class="booking-price-note sb-note">일~목 1박 기준 · 금~토 요금, 인원 추가비, 취소·환불 규정은 예약 확인 페이지에서 안내합니다.<br>포트폴리오용 예시이며 실제 예약은 진행되지 않습니다.</p>
+    </div></section>
+  </main>
+  <footer class="site-footer"><div class="wrap"><div class="footer-main"><div class="footer-brand"><a href="#top">AILO <span>POOL VILLA</span></a><p>바다와 나 사이, 오롯한 하루.</p><p class="footer-description">두 채의 독채, 프라이빗 풀,<br>그리고 창 너머로 이어지는 바다.</p><div class="footer-social" aria-label="소셜 미디어"><span title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span><span title="YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3Z" fill="currentColor" stroke="none"/></svg></span></div></div><div class="footer-contact"><h3>YOUR STAY</h3><p>체크인 15:00 · 체크아웃 11:00</p><p>예약 문의 09:00–20:00 · <a class="inq-link" href="inquiry.html">문의 남기기</a></p><p>독채별 전용 주차 · 사계절 온수풀</p><a class="footer-book" href="booking.html">머무를 날짜 확인하기 <span aria-hidden="true">↗</span></a></div><nav class="footer-links" aria-label="하단 메뉴"><h3>EXPLORE</h3><a href="#villas">두 독채</a><a href="#space">머무는 공간</a><a href="#check">예약 전 확인</a><a href="#location">오는 길과 주차</a></nav></div><div class="footer-bottom"><span>© 2026 AILO POOL VILLA. All rights reserved. · <a class="footer-privacy" href="privacy.html">개인정보 처리방침</a></span><span>A fictional stay, thoughtfully imagined.</span><a class="back-to-top" href="#top"><span>BACK TO TOP</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></a></div></div></footer>
+  <script src="hero-video.js"></script>
+  <script src="hero-scroll.js"></script>
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer:fine)').matches;
+    const header = document.querySelector('.header');
+    const clipReveals = document.querySelectorAll('.clip-reveal');
+    const horizontal = document.querySelector('.space-horizontal');
+    const rail = document.querySelector('.gallery');
+
+    const updateHeader = () => {
+      header.classList.toggle('is-compact', window.scrollY > 80);
+      header.classList.toggle('on-content', document.querySelector('.hero').getBoundingClientRect().bottom <= 100);
+    };
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive:true });
+
+    // Hero typography: supplied split-letter rise, once on entry.
+    const heroText = document.querySelector('.hero-text');
+    const heroTitle = heroText.querySelector('h1');
+    if (!reduceMotion) {
+      let letterIndex = 0;
+      heroTitle.setAttribute('aria-label', heroTitle.innerText || 'KNOW YOUR STAY. BEFORE YOU ARRIVE.');
+      heroTitle.innerHTML = heroTitle.innerHTML.split(/<br\s*\/?\s*>/i).map(line =>
+        line.split(' ').map(word => '<span class="w" aria-hidden="true">' +
+          Array.from(word).map(letter => '<span class="ch" style="transition-delay:' +
+            (letterIndex++ * 38) + 'ms">' + letter + '</span>').join('') + '</span>').join(' ')
+      ).join('<br>');
+      heroText.classList.add('split-ready');
+      setTimeout(() => requestAnimationFrame(() => heroText.classList.add('go')), 300);
+    }
+
+    // Independent image masks, scoped to villa images only.
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('in');
+          imageObserver.unobserve(entry.target);
+        });
+      }, { threshold:.45 });
+      document.querySelectorAll('.villa-media').forEach(media => {
+        media.classList.add('media-ready');
+        imageObserver.observe(media);
+      });
+    }
+
+    // Villa cards enter individually; checks enter in two synchronized groups.
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const villas = document.querySelectorAll('.villa');
+      const checks = Array.from(document.querySelectorAll('.check'));
+      const groups = [checks.slice(0,3),checks.slice(3,6)];
+      const entrance = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const group = groups.find(cards => cards[0] === entry.target);
+          (group || [entry.target]).forEach(card => card.classList.add('is-visible'));
+          entrance.unobserve(entry.target);
+        });
+      }, { threshold:.18, rootMargin:'0px 0px -24px 0px' });
+      villas.forEach(card => { card.classList.add('rise-ready'); entrance.observe(card); });
+      checks.forEach(card => card.classList.add('rise-ready'));
+      groups.forEach(cards => { if (cards[0]) entrance.observe(cards[0]); });
+    }
+
+    if (reduceMotion) {
+      clipReveals.forEach((element) => element.classList.add('is-visible'));
+      const viewport = rail.parentElement;
+      const progressBar = document.getElementById('galleryProgress');
+      const progressCount = document.getElementById('galleryCount');
+      const updateStaticGallery = () => {
+        const available = rail.scrollWidth - viewport.clientWidth;
+        const progress = available > 0 ? Math.max(0,Math.min(1,viewport.scrollLeft / available)) : 0;
+        const total = rail.children.length;
+        progressBar.style.width = `${progress * 100}%`;
+        progressBar.parentElement.setAttribute('aria-valuenow',String(Math.round(progress*100)));
+        progressCount.textContent = String(Math.min(total,1+Math.floor(progress*total))).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      };
+      viewport.addEventListener('scroll',updateStaticGallery,{passive:true});
+      window.addEventListener('resize',updateStaticGallery);
+      updateStaticGallery();
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+      }, { threshold:0.18 });
+      clipReveals.forEach((element) => observer.observe(element));
+      if (horizontal) {
+        const horizontalObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) document.querySelectorAll('.gallery .clip-reveal').forEach((element) => element.classList.add('is-visible'));
+          });
+        }, { threshold:0.08 });
+        horizontalObserver.observe(horizontal);
+      }
+
+      const galleryWindow = rail.parentElement;
+      const bar = document.getElementById('galleryProgress');
+      const counter = document.getElementById('galleryCount');
+      const count = rail.children.length;
+      const updateHorizontal = () => {
+        if (!horizontal || !rail) return;
+        const available = Math.max(0, rail.scrollWidth - galleryWindow.clientWidth);
+        let progress;
+        if (window.innerWidth <= 720) {
+          rail.style.transform = '';
+          progress = available ? galleryWindow.scrollLeft / available : 0;
+        } else {
+          const bounds = horizontal.getBoundingClientRect();
+          const pin = horizontal.querySelector('.space-pin');
+          const pinHeight = pin.offsetHeight;
+          const travel = Math.max(0, horizontal.offsetHeight - pinHeight);
+          // Keep the first frame still after pinning, and finish before the pin releases.
+          const startHold = Math.min(pinHeight * .25, travel * .15);
+          const endHold = Math.min(pinHeight * .65, travel * .25);
+          const movingDistance = Math.max(1, travel - startHold - endHold);
+          progress = Math.max(0, Math.min(1, (-bounds.top - startHold) / movingDistance));
+          rail.style.transform = `translate3d(${-available * progress}px,0,0)`;
+        }
+        progress = Math.max(0,Math.min(1,progress));
+        bar.style.width = `${progress * 100}%`;
+        bar.parentElement.setAttribute('aria-valuenow',String(Math.round(progress*100)));
+        counter.textContent = String(Math.min(count,1+Math.floor(progress*count))).padStart(2,'0') + ' / ' + String(count).padStart(2,'0');
+      };
+      updateHorizontal();
+      galleryWindow.addEventListener('scroll', updateHorizontal, { passive:true });
+      window.addEventListener('scroll', updateHorizontal, { passive:true });
+      window.addEventListener('resize', updateHorizontal);
+    }
+
+    if (finePointer && !reduceMotion) {
+      document.querySelectorAll('.spotlight').forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+          const box = card.getBoundingClientRect();
+          card.style.setProperty('--spot-x', `${event.clientX - box.left}px`);
+          card.style.setProperty('--spot-y', `${event.clientY - box.top}px`);
+        });
+      });
+      // 상단 유리 버튼(.glass-btn)은 자체 호버(살짝 위로)를 쓰므로 마우스 따라 끌려오는 효과에서 뺀다.
+      document.querySelectorAll('.reserve:not(.glass-btn)').forEach((button) => {
+        button.addEventListener('pointermove', (event) => {
+          const box = button.getBoundingClientRect();
+          const x = event.clientX - box.left;
+          const y = event.clientY - box.top;
+          button.style.setProperty('--fill-x', `${x}px`);
+          button.style.setProperty('--fill-y', `${y}px`);
+          const pullX = (x - box.width / 2) * .10;
+          const pullY = (y - box.height / 2) * .16;
+          button.style.transform = `translate(${pullX}px, ${pullY}px)`;
+        });
+        button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+      });
+    }
+
+  </script>
+  <script src="../02_assets/gosung-travel-map/basemap.js"></script>
+  <script src="../02_assets/gosung-travel-map/places.js"></script>
+  <script src="travel-map.js"></script>
+  <script src="member.js"></script>
+  <script src="booking-data.js"></script>
+  <script src="booking-search.js"></script>
+  <script src="mobile.js"></script>
+  <!-- 관리자에서 게시한 팝업 -->
+  <div class="site-popup" id="sitePopup" role="dialog" aria-modal="true" aria-label="안내 팝업" hidden><div class="site-popup-inner"><div class="site-popup-row" id="sitePopupRow"></div><div class="site-popup-bar"><button type="button" class="site-popup-today" id="sitePopupToday">오늘 하루 보지 않기</button><button type="button" class="site-popup-x" id="sitePopupClose" aria-label="팝업 모두 닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div></div></div>
+  <script src="site-popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+/* 예약 안내 카드 — 2026-10-10 재설계: 흰 바탕 위 따뜻한 타일 3장, 핵심 숫자를 크게, 요금은 표, 환불은 막대. */
+#reserve .booking-guide{margin:36px 0 0;padding:32px;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;color:var(--ink);box-shadow:0 18px 42px rgba(69,54,48,.06)}
+
+#reserve .bg-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#reserve .bg-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+#reserve .bg-kicker{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--sea)}
+#reserve .bg-head h3{margin:0;font-size:26px;line-height:1.3;font-weight:700;letter-spacing:-.02em}
+#reserve .bg-note{display:inline-flex;align-items:center;gap:8px;margin:0;padding:8px 14px;border-radius:999px;background:var(--sand);color:#6E5B44;font-size:13px;line-height:1.5;word-break:keep-all}
+#reserve .bg-note svg{flex:none;width:16px;height:16px}
+
+#reserve .bg-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
+#reserve .bg-card{display:flex;flex-direction:column;min-width:0;padding:24px 20px;border-radius:18px;background:#F7F2EA;container-type:inline-size}
+#reserve .bg-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px}
+#reserve .bg-card-head h4{margin:0;font-size:17px;font-weight:700;letter-spacing:-.01em}
+#reserve .bg-card-head span{font-size:13px;color:#74645D;white-space:nowrap}
+
+/* 숙박 요금 표 */
+#reserve .bg-rate-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+#reserve .bg-rate-table thead th{padding:0 0 10px;font-size:12px;font-weight:500;color:#74645D;text-align:right;letter-spacing:.02em}
+#reserve .bg-rate-table thead th:first-child{text-align:left}
+#reserve .bg-rate-table tbody th,#reserve .bg-rate-table td{padding:14px 0;border-top:1px solid var(--line);vertical-align:middle}
+#reserve .bg-rate-table tbody th{font-size:15px;font-weight:700;text-align:left;line-height:1.3}
+#reserve .bg-rate-table tbody th span{display:block;margin-top:3px;font-size:12px;font-weight:400;color:#74645D}
+#reserve .bg-rate-table td{padding-left:12px;font-size:19px;font-weight:700;text-align:right;white-space:nowrap;letter-spacing:-.01em}
+#reserve .bg-rate-table td small{margin-left:2px;font-size:13px;font-weight:500;color:#74645D}
+#reserve .bg-chips{display:flex;flex-wrap:wrap;gap:6px;margin:auto 0 0;padding:16px 0 0;list-style:none}
+#reserve .bg-chips li{padding:5px 11px;white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;font-size:12.5px;line-height:1.5;color:var(--ink)}
+#reserve .bg-chips li.is-extra{border-color:rgba(130,109,76,.45);color:var(--sea);font-weight:700}
+
+/* 인원 추가비 */
+#reserve .bg-figure{margin:0;font-size:36px;line-height:1.1;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#reserve .bg-figure small{margin-left:2px;font-size:17px;font-weight:500;letter-spacing:0}
+#reserve .bg-figure-cap{margin:8px 0 18px;font-size:14px;color:#74645D}
+#reserve .bg-capacity{margin:0}
+#reserve .bg-capacity>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+#reserve .bg-capacity dd{margin:0;font-weight:700}
+
+/* 취소·환불 막대 */
+#reserve .bg-refund{margin:0;padding:0;list-style:none}
+#reserve .bg-refund li{display:grid;grid-template-columns:minmax(0,1fr) 64px 64px;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+#reserve .bg-refund li:first-child{border-top:0;padding-top:0}
+#reserve .bg-refund-when{word-break:keep-all}
+#reserve .bg-refund-bar{height:6px;border-radius:999px;background:#E9E0D3;overflow:hidden}
+#reserve .bg-refund-bar i{display:block;height:100%;border-radius:inherit;background:var(--sea)}
+#reserve .bg-refund b{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#reserve .bg-refund li.is-full b{color:var(--sea)}
+#reserve .bg-refund li:last-child b{font-weight:500;color:#74645D}
+
+#reserve .bg-foot{margin:auto 0 0;padding-top:16px;font-size:12.5px;line-height:1.7;color:#74645D;word-break:keep-all}
+
+/* 카드가 충분히 넓으면: 문장 첫 줄을 고정하고 칩을 한 줄로 (디자인은 그대로) */
+@container (min-width:316px){ #reserve .bg-foot{font-size:12px} #reserve .bg-foot .bg-l1{display:block;white-space:nowrap} }
+@container (min-width:406px){ #reserve .bg-chips{flex-wrap:nowrap;gap:5px} #reserve .bg-chips li{padding:5px 10px;font-size:12px} }
+
+/* 예약 달력·요약 (기존 유지) */
+#reserve .calendar-panel{scroll-margin-top:110px}
+#reserve .calendar-week,#reserve .calendar-days{grid-template-columns:repeat(7,minmax(0,1fr))}
+#reserve .calendar-day{min-width:0;padding:0}
+#reserve .calendar-day:disabled{opacity:.45}
+#reserve .calendar-day.is-selected{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;line-height:1.1;opacity:1;text-decoration:none}
+#reserve .calendar-day.is-in-range{background:var(--sand);border-color:var(--line)}
+#reserve .booking-price-note{margin:12px 0 0;font-size:12px;color:#74645D;text-align:right;line-height:1.6}
+
+/* 예약 가능일 달력: 이번 달·다음 달을 세로로 나란히. 월 제목은 크게, 요일·날짜 글자는 그대로, 칸과 간격은 촘촘하게. */
+#reserve .calendar-months{display:flex;flex-direction:column;justify-content:flex-start;gap:100px;flex:1;margin:20px 0 0;padding:0;overflow:visible}
+#reserve .calendar-months .calendar-month{display:flex;flex-direction:column;flex:var(--rows,5) 1 0;min-width:0}
+#reserve .calendar-months .month-name{margin:0 0 6px;font-size:26px;line-height:28.6px}
+#reserve .calendar-week span{padding-bottom:4px}
+#reserve .calendar-panel .calendar-week,#reserve .calendar-panel .calendar-days{gap:3px;width:100%;max-width:504px;margin-left:auto;margin-right:auto}
+#reserve .calendar-months .calendar-days{flex:1;grid-auto-rows:minmax(44px,1fr)}
+#reserve .calendar-panel .calendar-day{aspect-ratio:auto;height:auto;max-height:none;font-size:15px}
+
+/* 반응형 */
+@media(max-width:1100px) and (min-width:721px){
+  #reserve .booking-guide{padding:28px}
+  #reserve .bg-grid{grid-template-columns:1fr 1fr}
+  #reserve .bg-card-rates{grid-column:1 / -1}
+  #reserve .bg-head{flex-direction:column;align-items:flex-start;gap:14px}
+}
+@media(max-width:720px){
+  #reserve .calendar-months{gap:28px;margin-top:8px}
+  #reserve .calendar-months .calendar-days{grid-auto-rows:44px}
+  #reserve .calendar-months .month-name{font-size:25px;line-height:27.3px}
+  #reserve .booking-guide{padding:20px;margin:24px 0 0;border-radius:20px}
+  #reserve .bg-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:18px}
+  #reserve .bg-head h3{font-size:23px}
+  #reserve .bg-note{align-items:flex-start;border-radius:14px;font-size:12.5px}
+  #reserve .bg-note svg{margin-top:2px}
+  #reserve .bg-grid{grid-template-columns:1fr;gap:12px}
+  #reserve .bg-card{padding:20px}
+  #reserve .bg-rate-table td{font-size:16px}
+  #reserve .bg-figure{font-size:32px}
+  #reserve .bg-refund li{grid-template-columns:minmax(0,1fr) 56px 64px}
+}
+@media(max-width:360px){
+  #reserve .bg-rate-table tbody th{font-size:14px}
+  #reserve .bg-rate-table td{font-size:15px;padding-left:8px}
+  #reserve .bg-refund li{grid-template-columns:minmax(0,1fr) 40px 60px;gap:8px}
+}

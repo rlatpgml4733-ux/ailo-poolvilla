@@ -1,0 +1,114 @@
+/* 결제 화면 (결제하기 · 성공 · 실패 · 취소) — 사이트 확정 색 */
+.pay-page { background:var(--mist,#F1EBE3); min-height:100svh; }
+.pay-top { display:flex; align-items:center; justify-content:space-between; padding:18px clamp(16px,4vw,48px); border-bottom:1px solid var(--line,#DDD2C5); background:#FCFBF7; }
+.pay-brand { color:#453630; font-family:"Ailo Cormorant",Georgia,serif; font-size:26px; letter-spacing:.09em; line-height:1; }
+.pay-brand span { display:block; margin-top:6px; font-size:10px; letter-spacing:.28em; }
+.pay-wrap { width:min(1080px,calc(100% - 32px)); margin:0 auto; padding:36px 0 72px; }
+.pay-kicker { margin:0 0 6px; color:#826D4C; font-size:12px; font-weight:700; letter-spacing:.16em; }
+.pay-title { margin:0 0 26px; font-size:clamp(28px,4vw,42px); letter-spacing:-.04em; line-height:1.2; }
+.pay-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:20px; align-items:start; }
+.pay-card { padding:28px; border:1px solid #DDD2C5; border-radius:22px; background:#FFFFFF; }
+.pay-card h2 { margin:0 0 16px; font-size:19px; letter-spacing:-.02em; }
+.pay-card h2:not(:first-child) { margin-top:28px; }
+.pay-summary { margin:0; }
+.pay-summary div { display:flex; justify-content:space-between; gap:16px; padding:12px 0; border-bottom:1px solid #EFE8DE; font-size:15px; }
+.pay-summary dt { color:#74645D; }
+.pay-summary dd { margin:0; font-weight:700; text-align:right; }
+.pay-total { display:flex; justify-content:space-between; align-items:baseline; margin:18px 0 0; font-size:15px; }
+.pay-total strong { font-size:28px; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.pay-note { margin:8px 0 0; color:#74645D; font-size:12px; line-height:1.6; }
+.pay-field { display:block; margin-bottom:14px; }
+.pay-field span { display:block; margin-bottom:6px; color:#74645D; font-size:13px; }
+.pay-field input { width:100%; min-height:50px; padding:0 14px; border:1px solid #DDD2C5; border-radius:12px; background:#FCFBF7; color:#453630; font:inherit; font-size:16px; }
+.pay-field input:focus-visible { outline:2px solid #826D4C; outline-offset:2px; }
+.pay-widget { margin:0 -8px; min-height:120px; }
+.pay-submit { width:100%; min-height:58px; margin-top:18px; border:0; border-radius:14px; background:#453630; color:#FCFBF7; font:inherit; font-size:17px; font-weight:800; cursor:pointer; }
+.pay-submit:hover { background:#33261F; }
+.pay-submit:disabled { opacity:.45; cursor:not-allowed; }
+.pay-submit:focus-visible { outline:2px solid #826D4C; outline-offset:3px; }
+.pay-error { min-height:22px; margin:12px 0 0; color:#8A3D2D; font-size:14px; font-weight:500; }
+.pay-test { margin:14px 0 0; padding:10px 14px; border-radius:10px; background:#FBF0DA; color:#5B4A2F; font-size:13px; line-height:1.6; }
+
+/* 결과 화면 */
+.pay-result { width:min(560px,calc(100% - 32px)); margin:48px auto 72px; padding:36px 32px; border:1px solid #DDD2C5; border-radius:24px; background:#FFFFFF; text-align:center; }
+.pay-result .icon { width:64px; height:64px; margin:0 auto 18px; display:grid; place-items:center; border-radius:50%; background:#826D4C; color:#FFFFFF; }
+.pay-result.is-fail .icon { background:#8A3D2D; }
+.pay-result.is-cancel .icon { background:#94847D; }
+.pay-result .icon svg { width:30px; height:30px; }
+.pay-result h1 { margin:0 0 10px; font-size:26px; letter-spacing:-.03em; }
+.pay-result p { margin:0; color:#74645D; font-size:15px; line-height:1.7; word-break:keep-all; }
+.pay-result .pay-summary { margin:22px 0 0; text-align:left; }
+.pay-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:26px; }
+.pay-actions a { display:inline-flex; align-items:center; min-height:48px; padding:0 22px; border:1px solid #DDD2C5; border-radius:999px; color:#453630; font-size:15px; font-weight:600; }
+.pay-actions a.is-primary { border-color:#453630; background:#453630; color:#FCFBF7; }
+.pay-actions a:focus-visible { outline:2px solid #826D4C; outline-offset:3px; }
+.pay-loading { color:#74645D; }
+
+@media (max-width:860px) { .pay-grid { grid-template-columns:1fr; } }
+@media (max-width:520px) { .pay-card, .pay-result { padding:22px 18px; } }
+
+/* ── 예약 문의 폼 ── */
+.inq-wrap { width:min(820px,calc(100% - 32px)); }
+.inq-lead { margin:-12px 0 24px; color:#74645D; font-size:16px; line-height:1.75; word-break:keep-all; }
+.inq-form { display:block; }
+.inq-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 14px; }
+.inq-row-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.pay-field em { margin-left:4px; color:#8A3D2D; font-size:11px; font-style:normal; font-weight:700; }
+.pay-field textarea, .inq-select { width:100%; padding:12px 14px; border:1px solid #DDD2C5; border-radius:12px; background:#FCFBF7; color:#453630; font:inherit; font-size:16px; line-height:1.6; }
+.inq-select { min-height:50px; }
+.pay-field textarea { resize:vertical; min-height:150px; }
+.pay-field textarea:focus-visible, .inq-select:focus-visible { outline:2px solid #826D4C; outline-offset:2px; }
+.inq-count { display:block; margin-top:4px; color:#94847D; font-size:12px; text-align:right; }
+.inq-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.inq-consent { margin:6px 0 4px; padding:14px 16px; border-radius:12px; background:#F7F2EA; }
+.inq-check { display:flex; align-items:flex-start; gap:10px; font-size:15px; cursor:pointer; }
+.inq-check input { flex:none; width:20px; height:20px; margin-top:2px; accent-color:#826D4C; }
+.inq-consent p { margin:8px 0 0 30px; color:#74645D; font-size:12px; line-height:1.6; word-break:keep-all; }
+.inq-done { margin-top:0; }
+.inq-done h2 { margin:0 0 14px; font-size:24px; letter-spacing:-.03em; }
+.inq-number { margin:4px 0 14px !important; color:#453630 !important; font-size:26px !important; font-weight:800; letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+@media (max-width:640px) { .inq-row, .inq-row-3 { grid-template-columns:1fr; } }
+
+/* 결제 화면 예약 동의 */
+.pay-consent { margin:18px 0 4px; }
+.pay-consent h3 { margin:0 0 12px; color:#453630; font-size:15px; font-weight:700; }
+.pay-consent h3 em { margin-left:4px; color:#8A3D2D; font-size:11px; font-style:normal; font-weight:700; }
+.pay-consent hr { margin:12px 0; border:0; border-top:1px solid #E4D9CB; }
+.pay-consent .inq-check + .pay-terms { margin:4px 0 10px 30px; }
+.pay-terms summary { width:max-content; color:#826D4C; font-size:12px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.pay-terms p, .pay-consent .pay-terms ul { margin:8px 0 0; color:#74645D; font-size:12px; line-height:1.6; word-break:keep-all; }
+.pay-terms ul { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 16px; padding:0; list-style:none; }
+.pay-terms li b { color:#453630; }
+.pay-hold { margin:4px 0 0; color:#74645D; font-size:13px; }
+
+/* ── 카카오 로그인 · 내 예약 · 개인정보 처리방침 ── */
+.kakao-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:54px; border-radius:12px; background:#FEE500; color:rgba(0,0,0,.85); font-size:16px; font-weight:700; }
+.kakao-btn svg { width:20px; height:20px; }
+.kakao-btn:hover { background:#F5DC00; }
+.kakao-btn:focus-visible { outline:2px solid #826D4C; outline-offset:3px; }
+.my-login .inq-lead { margin:0 0 20px; }
+.my-notice { margin:-10px 0 20px; padding:12px 16px; border-radius:12px; background:#FBF0DA; color:#5B4A2F; font-size:14px; }
+.my-list { display:grid; gap:14px; }
+.my-card-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px; }
+.my-card-head h2 { margin:0 !important; }
+.my-badge { flex:none; padding:4px 10px; border-radius:999px; background:#F1EBE3; color:#5B4A2F; font-size:12px; font-weight:700; }
+.my-badge.is-confirmed { background:#826D4C; color:#FFFFFF; }
+.my-badge.is-cancelled { background:#F3E3DF; color:#8A3D2D; }
+.my-empty p { margin:0; color:#453630; font-size:16px; }
+.my-actions { justify-content:flex-start; }
+.my-btn { min-height:48px; padding:0 22px; border:1px solid #DDD2C5; border-radius:999px; background:#FFFFFF; color:#453630; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
+.my-btn:hover { border-color:#453630; }
+.my-withdraw { margin-top:40px; padding-top:20px; border-top:1px solid #DDD2C5; }
+.my-link-btn { padding:0; border:0; background:none; color:#74645D; font:inherit; font-size:14px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.my-link-btn.is-armed { color:#8A3D2D; font-weight:700; }
+.pay-member { margin:-6px 0 16px; padding:10px 14px; border-radius:10px; background:#F7F2EA; color:#5B4A2F; font-size:13px; line-height:1.6; }
+.pay-member a { margin-right:4px; color:#453630; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.inq-consent p a, .pay-terms p a { color:#453630; text-decoration:underline; text-underline-offset:3px; }
+.policy p, .policy li { color:#5E504A; font-size:15px; line-height:1.8; word-break:keep-all; }
+.policy ul { margin:0; padding-left:20px; }
+.policy a { color:#453630; text-decoration:underline; text-underline-offset:3px; }
+.policy-table { width:100%; border-collapse:collapse; font-size:14px; }
+.policy-table th, .policy-table td { padding:10px 8px; border-bottom:1px solid #EFE8DE; text-align:left; vertical-align:top; line-height:1.6; word-break:keep-all; }
+.policy-table thead th { color:#74645D; font-size:12px; }
+.policy-table tbody th { white-space:nowrap; }
+@media (max-width:560px) { .policy-table, .policy-table tbody, .policy-table tr, .policy-table th, .policy-table td { display:block; } .policy-table thead { display:none; } .policy-table tr { padding:8px 0; border-bottom:1px solid #EFE8DE; } .policy-table th, .policy-table td { padding:2px 0; border:0; } }

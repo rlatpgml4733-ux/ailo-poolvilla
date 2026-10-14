@@ -1,0 +1,30 @@
+/* 메인 첫 화면 팝업: 여러 장을 좁은 간격으로 나란히, 아래 버튼 하나로 한꺼번에 닫기 */
+.site-popup { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:24px 20px; background:rgba(33,26,22,.72); }
+.site-popup[hidden] { display:none; }
+.site-popup-inner { display:flex; flex-direction:column; align-items:center; gap:14px; max-width:100%; }
+.site-popup-row { --n:1; display:flex; justify-content:center; align-items:flex-start; gap:8px; max-width:calc(100vw - 40px); }
+/* 카드 배경은 투명. 이미지 크기는 site-popup.js 가 비율대로 계산해(높이는 모두 같게) 빈 칸이 생기지 않는다 */
+.site-popup-card { flex:0 0 auto; display:block; background:transparent; }
+.site-popup-card img { display:block; width:auto; height:min(66svh,580px); border-radius:12px; box-shadow:0 24px 60px rgba(0,0,0,.35); }
+a.site-popup-card { cursor:pointer; }
+a.site-popup-card:focus-visible { outline:3px solid #FBF0DA; outline-offset:3px; }
+
+.site-popup-bar { display:flex; align-items:center; gap:2px; }
+.site-popup-today, .site-popup-x { min-height:44px; border:0; background:transparent; color:#FFFFFF; font:inherit; cursor:pointer; transition:opacity .2s; }
+.site-popup-today { padding:0 12px; font-size:16px; font-weight:500; letter-spacing:-.01em; }
+.site-popup-x { width:44px; display:grid; place-items:center; padding:0; }
+.site-popup-x svg { width:24px; height:24px; }
+.site-popup-today:hover, .site-popup-x:hover { opacity:.75; }
+.site-popup-today:focus-visible, .site-popup-x:focus-visible { outline:2px solid #FBF0DA; outline-offset:2px; border-radius:8px; }
+html.popup-open, html.popup-open body { overflow:hidden; }
+
+/* 모바일: 옆으로 넘겨 보기 */
+@media (max-width:720px) {
+  .site-popup { padding:20px 0; }
+  .site-popup-row { justify-content:flex-start; width:100vw; max-width:100vw; padding:0 16px 4px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; }
+  .site-popup-row::-webkit-scrollbar { display:none; }
+  .site-popup-row.is-single { justify-content:center; }
+  .site-popup-card { flex:0 0 min(80vw,360px); display:flex; justify-content:center; scroll-snap-align:center; }
+  .site-popup-card img { width:auto !important; height:auto !important; max-width:100%; max-height:64svh; }
+}
+@media (prefers-reduced-motion:reduce) { .site-popup-today, .site-popup-x { transition:none; } }

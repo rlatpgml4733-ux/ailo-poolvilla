@@ -1,0 +1,88 @@
+/* 상단 "실시간 예약" 버튼: 푸터 BACK TO TOP과 같은 유리 알약 코드에 예약 버튼 크림색(#FBF0DA)을 입힘.
+   흰 유리(BACK TO TOP 원색)는 연한 하늘 배경 위에서 잘 안 보여 크림색으로 정함. */
+
+.header .reserve.glass-btn,
+.header.on-content .reserve.glass-btn,
+.header.wrap .reserve.glass-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  color: #453630;
+  text-shadow: none;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  background: linear-gradient(180deg, rgba(255, 248, 232, .98), rgba(251, 240, 218, .92));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, .95), inset 0 -2px 4px rgba(69, 54, 48, .13), 0 3px 9px rgba(0, 0, 0, .2);
+  transition: transform .2s, box-shadow .2s;
+}
+.header .reserve.glass-btn::before { content: none; }
+.header .reserve.glass-btn:hover,
+.header .reserve.glass-btn:focus-visible,
+.header.on-content .reserve.glass-btn:hover,
+.header.on-content .reserve.glass-btn:focus-visible {
+  color: #453630;
+  background: linear-gradient(180deg, rgba(255, 248, 232, .98), rgba(251, 240, 218, .92));
+  transform: translateY(-2px);
+}
+.header .reserve.glass-btn:active { transform: translateY(1px); }
+.header .reserve.glass-btn:focus-visible { outline: 2px solid #826D4C; outline-offset: 4px; }
+
+@media (max-width: 720px) {
+  .header .reserve.glass-btn, .header.on-content .reserve.glass-btn, .header.wrap .reserve.glass-btn { padding: 12px 20px; font-size: 14px; }
+}
+@media (max-width: 360px) {
+  .header .reserve.glass-btn, .header.on-content .reserve.glass-btn, .header.wrap .reserve.glass-btn { padding: 12px 15px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header .reserve.glass-btn { transition: none; }
+  .header .reserve.glass-btn:hover, .header .reserve.glass-btn:focus-visible { transform: none; }
+}
+
+/* ── 예약 확인 페이지의 "메인에서 조건 다시 고르기": 푸터 BACK TO TOP 버튼과 같은 유리 알약 모양 ── */
+.bk-back.back-to-top {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin: 0 0 26px;
+  padding: 12px 23px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  color: #453630;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(252, 251, 247, .72));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, .95), inset 0 -2px 4px rgba(69, 54, 48, .13), 0 3px 9px rgba(0, 0, 0, .2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  transition: transform .2s, box-shadow .2s;
+}
+.bk-back.back-to-top:hover { color: #453630; transform: translateY(-2px); }
+.bk-back.back-to-top svg { width: 19px; height: 19px; flex: none; }
+
+/* ── "문의 남기기" 작은 글자 링크 (예약 버튼과 경쟁하지 않게 조용히) ── */
+.inq-link { display:inline-flex; align-items:center; gap:4px; color:var(--sea); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.inq-link:hover { color:var(--ink); }
+.inq-link:focus-visible { outline:2px solid var(--sea); outline-offset:3px; border-radius:4px; }
+.check .inq-link { margin-top:14px; font-size:15px; }
+.site-footer .inq-link { color:var(--sand); }
+.site-footer .inq-link:hover { color:#FFFFFF; }
+.bk-ask { margin:10px 0 0; color:#74645D; font-size:13px; text-align:center; }
+
+/* 헤더 메뉴의 회원 링크 (카카오로 시작하기 / ○○님의 예약) */
+.nav .member-link { font-weight:600; }
+.footer-privacy { color:inherit; text-decoration:underline; text-underline-offset:3px; }
