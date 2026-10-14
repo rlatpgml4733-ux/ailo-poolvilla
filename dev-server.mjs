@@ -41,6 +41,7 @@ const API = {
   '/api/popup-image': 'api/popup-image.js',
   '/api/inquiries': 'api/inquiries.js',
   '/api/availability': 'api/availability.js',
+  '/api/health': 'api/health.js',
   '/api/payments/config': 'api/payments/config.js',
   '/api/payments/quote': 'api/payments/quote.js',
   '/api/payments/prepare': 'api/payments/prepare.js',

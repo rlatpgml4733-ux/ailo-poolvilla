@@ -1,10 +1,13 @@
 // Vercel 에 연결한 Upstash Redis(REST) 를 쓰는 작은 도우미. 추가 패키지 없이 fetch 로 부른다.
 // 환경변수(KV_REST_API_URL·KV_REST_API_TOKEN 또는 UPSTASH_REDIS_REST_URL·UPSTASH_REDIS_REST_TOKEN)가 없으면
 // hasKv() 가 false 이고, 저장소는 로컬 JSON 파일을 쓴다.
-const env = () => ({
-  url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '',
-  token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '',
-});
+// 붙여 넣을 때 섞인 앞뒤 공백·따옴표, 빠진 https:// 는 바로잡는다
+const clean = value => String(value || '').trim().replace(/^["']|["']$/g, '').trim();
+const env = () => {
+  let url = clean(process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL);
+  if (url && !/^https?:\/\//.test(url)) url = `https://${url}`;
+  return { url: url.replace(/\/+$/, ''), token: clean(process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN) };
+};
 
 export const hasKv = () => { const { url, token } = env(); return Boolean(url && token); };
 
